@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TwitchCopypastaBot.Logging;
 using TwitchCopypastaBot.Database;
+using TwitchCopypastaBot.Models;
 using TwitchLib.Client;
 using TwitchLib.Client.Models;
 using TwitchLib.Communication.Clients;
@@ -24,8 +25,10 @@ namespace TwitchCopypastaBot.Bot
 
 		private TwitchClient _client;
 
-		private static List<Tuple<string, string>> _copypastas;
-		private List<string> _allMessages;
+		private static List<Copypasta> _copypastas;
+
+		//private List<string> _allMessages;
+		private Dictionary<string, int> _allMessages;
 
 		public TwitchChatBot()
 		{
@@ -34,25 +37,41 @@ namespace TwitchCopypastaBot.Bot
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
 		private void EvaluateAllMessages()
 		{
-			for (int i = 0; i < _allMessages.Count; i++)
-			{
-				int count = 1;
-				for (int j = i; j < _allMessages.Count;)
-				{
-					if (_allMessages[j].Contains(_allMessages[i]))
-					{
-						count++;
-						_allMessages.RemoveAt(j);
-					}
-					else
-					{
-						j++;
-					}
-				}
+			////for (int i = 0; i < _allMessages.Count; i++)
+			////{
+			////	int count = 1;
+			////	for (int j = i; j < _allMessages.Count;)
+			////	{
+			////		if (_allMessages[j].Contains(_allMessages[i]))
+			////		{
+			////			count++;
+			////			_allMessages.RemoveAt(j);
+			////		}
+			////		else
+			////		{
+			////			j++;
+			////		}
+			////	}
 
-				if (count >= MinCount)
+			////	if (count >= MinCount)
+			////	{
+			////		_copypastas.Add(new Tuple<string, string>("", _allMessages[i]));
+			////	}
+			////}
+
+			////_allMessages.Clear();
+
+			foreach (var pair in _allMessages)
+			{
+				if (pair.Value >= MinCount)
 				{
-					_copypastas.Add(new Tuple<string, string>("", _allMessages[i]));
+					var copypasta = new Copypasta()
+					{
+						Title = "",
+						Content = pair.Key,
+						DateAdded = DateTime.Now
+					};
+					_copypastas.Add(copypasta);
 				}
 			}
 
@@ -78,8 +97,8 @@ namespace TwitchCopypastaBot.Bot
 			_client.OnMessageReceived += this._client_OnMessageReceived;
 			_client.OnConnected += this._client_OnConnected;
 
-			_allMessages = new List<string>();
-			_copypastas = new List<Tuple<string, string>>();
+			_allMessages = new Dictionary<string, int>();
+			_copypastas = new List<Copypasta>();
 
 			_client.Connect();
 		}
@@ -101,9 +120,17 @@ namespace TwitchCopypastaBot.Bot
 
 		private void _client_OnMessageReceived(object sender, TwitchLib.Client.Events.OnMessageReceivedArgs e)
 		{
-			var message = e.ChatMessage.Message;
+			var message = e.ChatMessage.Message.Trim();
 
-			_allMessages.Add(message);
+			var pair = from m in _allMessages where m.Key.Contains(message) select m;
+			if (!pair.Any())
+			{
+				_allMessages.Add(message, 1);
+			}
+			else
+			{
+				_allMessages[message]++;
+			}
 
 			if (_allMessages.Count >= MaxCapacity)
 			{

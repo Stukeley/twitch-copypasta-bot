@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace TwitchCopypastaBot.Models
 		[Key]
 		public int Id { get; set; }
 
+		[DefaultValue("")]
 		public string Title { get; set; }
 
 		public string Content { get; set; }

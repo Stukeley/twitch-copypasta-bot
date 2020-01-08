@@ -69,7 +69,7 @@ namespace TwitchCopypastaBot.Database
 			return dict;
 		}
 
-		public static void UpdateDatabaseFromList(List<Tuple<string, string>> copypastas)
+		public static void UpdateDatabaseFromList(List<Copypasta> copypastas)
 		{
 			//check for copypastas that have already been added, then add the rest
 			using (var db = new CopypastaContext())
@@ -81,7 +81,7 @@ namespace TwitchCopypastaBot.Database
 
 					foreach (var dbCopypasta in dbCopypastas)
 					{
-						if (dbCopypasta.Content == copypastas[i].Item2)
+						if (dbCopypasta.Content == copypastas[i].Content)
 						{
 							found = true;
 							break;
@@ -90,7 +90,7 @@ namespace TwitchCopypastaBot.Database
 
 					if (found)
 					{
-						db.Copypastas.Add(new Copypasta() { Title = copypastas[i].Item1, Content = copypastas[i].Item2 });
+						db.Copypastas.Add(copypastas[i]);
 					}
 				}
 
@@ -98,15 +98,19 @@ namespace TwitchCopypastaBot.Database
 			}
 		}
 
-		public static void UpdateTitle(List<Tuple<string, string>> copypastas, string title, string content)
+		public static void UpdateTitle(List<Copypasta> copypastas, string title, string content)
 		{
 			//check if the given pasta exists, then add a title to it (in the static list of copypastas), then update database
 
 			for (int i = 0; i < copypastas.Count; i++)
 			{
-				if (copypastas[i].Item2 == content)
+				if (copypastas[i].Content == content)
 				{
-					var updated = new Tuple<string, string>(title, content);
+					var updated = new Copypasta()
+					{
+						Title = title,
+						Content = content
+					};
 					copypastas[i] = updated;
 					UpdateDatabaseFromList(copypastas);
 					break;
