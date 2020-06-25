@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -16,19 +17,30 @@ namespace TwitchCopypastaBot.Bot
 {
 	internal class TwitchChatBot
 	{
+		// Not included in the solution - contains the sensitive bot info (like password and API key)
+		private string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
+
+		// Channel name to join
+		private string ChannelName = "Overpow";
+
 		private static Logger _logger = new Logger("TwitchCopypastaBot Logs " + DateTime.Now.ToString());
 		private static int _logId = 1;
+
+		// How many messages before evaluating
 		private const int MaxCapacity = 200;
+
+		// Minimum count of duplicates for a message to be considered a "pasta"
 		private const int MinCount = 15;
 
-		private readonly ConnectionCredentials _credentials = new ConnectionCredentials(BotInfo.BotUsername, BotInfo.BotToken);
+		private ConnectionCredentials _credentials;
 
 		private TwitchClient _client;
 
+		// Evaluated copypastas - no given size
 		private static List<Copypasta> _copypastas;
 
-		//private List<string> _allMessages;
-		private Dictionary<string, int> _allMessages;
+		// All messages
+		private List<string> _allMessages;
 
 		public TwitchChatBot()
 		{
@@ -37,50 +49,49 @@ namespace TwitchCopypastaBot.Bot
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
 		private void EvaluateAllMessages()
 		{
-			////for (int i = 0; i < _allMessages.Count; i++)
-			////{
-			////	int count = 1;
-			////	for (int j = i; j < _allMessages.Count;)
-			////	{
-			////		if (_allMessages[j].Contains(_allMessages[i]))
-			////		{
-			////			count++;
-			////			_allMessages.RemoveAt(j);
-			////		}
-			////		else
-			////		{
-			////			j++;
-			////		}
-			////	}
+			int currentCount = 0;
 
-			////	if (count >= MinCount)
-			////	{
-			////		_copypastas.Add(new Tuple<string, string>("", _allMessages[i]));
-			////	}
-			////}
-
-			////_allMessages.Clear();
-
-			foreach (var pair in _allMessages)
+			for (int i = 0; i < _allMessages.Count; i++)
 			{
-				if (pair.Value >= MinCount)
+				var currentMessage = _allMessages[i];
+
+				for (int j = i + 1; j < _allMessages.Count; j++)
 				{
-					var copypasta = new Copypasta()
+					if (_allMessages[j].Contains(currentMessage))
 					{
-						Title = "",
-						Content = pair.Key,
+						currentCount++;
+						_allMessages.RemoveAt(j);
+						j--;
+					}
+				}
+
+				if (currentCount >= MinCount)
+				{
+					var pasta = new Copypasta()
+					{
+						Content = currentMessage,
 						DateAdded = DateTime.Now
 					};
-					_copypastas.Add(copypasta);
+
+					_copypastas.Add(pasta);
 				}
 			}
-
-			_allMessages.Clear();
 		}
 
 		public void Connect()
 		{
 			_logger.Log(_logId++, "Connecting", DateTime.Now);
+
+			string BotUsername, BotToken;
+
+			using (var reader = new StreamReader(BotInfoPath))
+			{
+				BotUsername = reader.ReadLine();
+				BotToken = reader.ReadLine();
+			}
+
+			_credentials = new ConnectionCredentials(BotUsername, BotToken);
+
 
 			var clientOptions = new ClientOptions()
 			{
@@ -97,7 +108,7 @@ namespace TwitchCopypastaBot.Bot
 			_client.OnMessageReceived += this._client_OnMessageReceived;
 			_client.OnConnected += this._client_OnConnected;
 
-			_allMessages = new Dictionary<string, int>();
+			_allMessages = new List<string>();
 			_copypastas = new List<Copypasta>();
 
 			_client.Connect();
@@ -118,26 +129,21 @@ namespace TwitchCopypastaBot.Bot
 			_logger.Log(_logId++, e.Data, e.DateTime);
 		}
 
+		// Register a message in the All Messages List
 		private void _client_OnMessageReceived(object sender, TwitchLib.Client.Events.OnMessageReceivedArgs e)
 		{
+			// Remove useless characters at the start and end
 			var message = e.ChatMessage.Message.Trim();
 
-			var pair = from m in _allMessages where m.Key.Contains(message) select m;
-			if (!pair.Any())
-			{
-				_allMessages.Add(message, 1);
-			}
-			else
-			{
-				_allMessages[message]++;
-			}
+			_allMessages.Add(message);
 
-			if (_allMessages.Count >= MaxCapacity)
+			if (_allMessages.Count >= 200)
 			{
 				EvaluateAllMessages();
 			}
 		}
 
+		// Disconnect the bot, leave the channel and update the database.
 		public void Disconnect()
 		{
 			_logger.Log(_logId++, "Disconnecting", DateTime.Now);
