@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Bot/BotInfo.resx
+/Bot/BotInfo.txt

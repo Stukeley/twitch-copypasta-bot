@@ -6,15 +6,54 @@
         xmlns:local="clr-namespace:TwitchCopypastaBot"
 		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Copypasty" Height="450" Width="800"
 		TextElement.Foreground="{DynamicResource MaterialDesignBody}"
      TextElement.FontWeight="Regular"
      TextElement.FontSize="13"
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
-		
+     FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize">
+	<Grid Background="LightGray">
+		<Grid x:Name="DragableTop" Height="50" VerticalAlignment="Top" Background="#FF1368BD">
+			<TextBlock Text="Placeholder" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="LightGray"
+                       FontSize="26" FontFamily="Berlin Sans FB"/>
+		</Grid>
+
+		<Grid x:Name="GridMenu" Width="60" HorizontalAlignment="Left" Background="#FF1B3861" Panel.ZIndex="3">
+			<StackPanel>
+				<Grid x:Name="EmoteGrid" Height="50" Background="White"/>
+
+				<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="#FF1368BD">
+					<ListViewItem x:Name="Homepage" Height="60" PreviewMouseUp="Homepage_PreviewMouseUp">
+						<StackPanel Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="HomeOutline" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+							<TextBlock Text="Strona Główna" VerticalAlignment="Center" Margin="10 10"/>
+						</StackPanel>
+					</ListViewItem>
+					<ListViewItem x:Name="Browse" Height="60" PreviewMouseUp="Browse_PreviewMouseUp">
+						<StackPanel Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="NoteOutline" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+							<TextBlock Text="Książki" VerticalAlignment="Center" Margin="10 10"/>
+						</StackPanel>
+					</ListViewItem>
+					<ListViewItem x:Name="Edit" Height="60" PreviewMouseUp="Edit_PreviewMouseUp">
+						<StackPanel Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="Pen" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+							<TextBlock Text="Autorzy" VerticalAlignment="Center" Margin="10 10"/>
+						</StackPanel>
+					</ListViewItem>
+					<ListViewItem x:Name="Actions" Height="60" PreviewMouseUp="Actions_PreviewMouseUp">
+						<StackPanel Orientation="Horizontal">
+							<materialDesign:PackIcon Kind="CogOutline" Width="25" Height="25" Margin="10" VerticalAlignment="Center"/>
+							<TextBlock Text="Kontakt" VerticalAlignment="Center" Margin="10 10"/>
+						</StackPanel>
+					</ListViewItem>
+				</ListView>
+			</StackPanel>
+		</Grid>
+
+		<Grid x:Name="ContentGrid" Width="732" Height="369" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+		</Grid>
 	</Grid>
 </Window>

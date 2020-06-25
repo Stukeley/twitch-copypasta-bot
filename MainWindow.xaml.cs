@@ -23,6 +23,35 @@ namespace TwitchCopypastaBot
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			//var img = new Image()
+			//{
+			//	Width = 26,
+			//	Height = 32,
+			//	Source = new BitmapImage(new Uri(@"Resources/5Head.png"))
+			//};
+
+			//EmoteGrid.Children.Add(img);
+		}
+
+		private void Homepage_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void Browse_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+
 		}
 	}
 }
