@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="TwitchCopypastaBot.Windows.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
+      mc:Ignorable="d" 
+      d:DesignHeight="371" d:DesignWidth="794"
+	  Background="LightGray"
+	  >
+
+	<Grid>
+		<TextBlock x:Name="CopypastaBotActive" Text="Witaj. Bot aktywny!" FontFamily="Roboto" FontSize="18" FontWeight="Medium"
+				   HorizontalAlignment="Left" Margin="100,50,0,276"/>
+
+		<TextBlock x:Name="CopypastaCountText" Text="Obecna ilość Copypast w bazie danych: [0]" FontFamily="Roboto" FontSize="18" FontWeight="Medium"
+				   HorizontalAlignment="Left" Margin="100,100,0,226"/>
+		
+		<TextBlock x:Name="CopypastaDateText" Text="Data dodania ostatniej Copypasty: [1]" FontFamily="Roboto" FontSize="18" FontWeight="Medium"
+				   HorizontalAlignment="Left" Margin="100,150,0,176"/>
+
+		<TextBlock x:Name="CopypastaUntitledCount" Text="W bazie danych jest nadal [2] Copypast bez tytułu. Dodaj je teraz!" FontFamily="Roboto" FontSize="18" FontWeight="Medium"
+				   HorizontalAlignment="Left" Margin="100,200,0,126"/>
+
+		<TextBlock x:Name="SeeLogsButton" Text="Aby przejrzeć logi, kliknij tutaj" FontFamily="Roboto" FontSize="18" FontWeight="Medium"
+				   HorizontalAlignment="Left" Margin="100,250,0,76" Foreground="DarkRed" PreviewMouseUp="SeeLogsButton_PreviewMouseUp"/>
+	</Grid>
+</UserControl>

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -116,6 +119,46 @@ namespace TwitchCopypastaBot.Database
 					break;
 				}
 			}
+		}
+
+		public static int GetCopypastaCount()
+		{
+			// Get the total count of copypastas currently in the database
+			int count;
+
+			using (var db = new CopypastaContext())
+			{
+				count = (from c in db.Copypastas select c).Count();
+			}
+
+			return count;
+		}
+
+		public static int GetUnnamedCopypastaCount()
+		{
+			// Get the amount of copypastas in the database that do not have a title
+			int count;
+
+			using (var db = new CopypastaContext())
+			{
+				count = (from c in db.Copypastas where c.Title == "" select c).Count();
+			}
+
+			return count;
+		}
+
+		public static DateTime GetLastCopypastaDate()
+		{
+			// Returns the DateTime for the most recently added copypasta
+			DateTime date;
+
+			using (var db = new CopypastaContext())
+			{
+				var latest = (from c in db.Copypastas orderby c.DateAdded descending select c).First();
+				date = latest.DateAdded;
+			}
+
+			return date;
 		}
 	}
 }

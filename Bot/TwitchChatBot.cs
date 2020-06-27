@@ -17,14 +17,14 @@ namespace TwitchCopypastaBot.Bot
 {
 	internal class TwitchChatBot
 	{
-		// Not included in the solution - contains the sensitive bot info (like password and API key)
+		//! SETUP
+
+		// Not included in the solution - contains the sensitive bot info (username and API key)
+		// Please never share these anywhere! Keep them out of the solution
 		private string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
 
 		// Channel name to join
 		private string ChannelName = "Overpow";
-
-		private static Logger _logger = new Logger("TwitchCopypastaBot Logs " + DateTime.Now.ToString());
-		private static int _logId = 1;
 
 		// How many messages before evaluating
 		private const int MaxCapacity = 200;
@@ -32,21 +32,36 @@ namespace TwitchCopypastaBot.Bot
 		// Minimum count of duplicates for a message to be considered a "pasta"
 		private const int MinCount = 15;
 
+		//! END SETUP
+
+		public static bool IsActive = false;
+
+		private static Logger _logger;
+		private static int _logId = 1;
+
 		private ConnectionCredentials _credentials;
 
 		private TwitchClient _client;
 
+		// All messages
+		private List<string> _allMessages;
+
 		// Evaluated copypastas - no given size
 		private static List<Copypasta> _copypastas;
 
-		// All messages
-		private List<string> _allMessages;
+		static TwitchChatBot()
+		{
+			string fileName = "TwitchCopypastaBot Logs " + DateTime.Now.ToString();
+			_logger = new Logger(fileName);
+			Models.Titles.LogsFileName = fileName;
+		}
 
 		public TwitchChatBot()
 		{
 		}
 
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
+		// TODO: detect duplicate messages (get list of all from current database every time this method is called)
 		private void EvaluateAllMessages()
 		{
 			int currentCount = 0;
@@ -76,6 +91,12 @@ namespace TwitchCopypastaBot.Bot
 					_copypastas.Add(pasta);
 				}
 			}
+
+			if (_copypastas.Count > 0)
+			{
+				// Update the database
+				DatabaseOperations.UpdateDatabaseFromList(_copypastas);
+			}
 		}
 
 		public void Connect()
@@ -101,7 +122,7 @@ namespace TwitchCopypastaBot.Bot
 			var customClient = new WebSocketClient(clientOptions);
 
 			_client = new TwitchClient(customClient);
-			_client.Initialize(_credentials, "overpow");
+			_client.Initialize(_credentials, ChannelName);
 
 			_client.OnLog += this._client_OnLog;
 			_client.OnJoinedChannel += this._client_OnJoinedChannel;
@@ -112,6 +133,8 @@ namespace TwitchCopypastaBot.Bot
 			_copypastas = new List<Copypasta>();
 
 			_client.Connect();
+
+			IsActive = true;
 		}
 
 		private void _client_OnConnected(object sender, TwitchLib.Client.Events.OnConnectedArgs e)
@@ -149,6 +172,8 @@ namespace TwitchCopypastaBot.Bot
 			_logger.Log(_logId++, "Disconnecting", DateTime.Now);
 			DatabaseOperations.UpdateDatabaseFromList(_copypastas);
 			_client.Disconnect();
+
+			IsActive = false;
 		}
 	}
 }

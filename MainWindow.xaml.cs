@@ -12,31 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TwitchCopypastaBot.Windows;
 
 namespace TwitchCopypastaBot
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			//var img = new Image()
-			//{
-			//	Width = 26,
-			//	Height = 32,
-			//	Source = new BitmapImage(new Uri(@"Resources/5Head.png"))
-			//};
+			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
+		}
 
-			//EmoteGrid.Children.Add(img);
+		private void ChangeContent(UserControl newPage, string title)
+		{
+			ContentGrid.Children.Clear();
+			ContentGrid.Children.Add(newPage);
+			CurrentPageText.Text = title;
 		}
 
 		private void Homepage_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-
+			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
 		}
 
 		private void Browse_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -51,7 +49,13 @@ namespace TwitchCopypastaBot
 
 		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
+			ChangeContent(new ActionsPage(), Models.Titles.ActionsPageTitle);
+		}
 
+		private void Emote_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			var credits = new CreditsWindow();
+			credits.Show();
 		}
 	}
 }
