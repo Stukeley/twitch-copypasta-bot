@@ -21,5 +21,10 @@ namespace TwitchCopypastaBot.Windows
 		{
 			InitializeComponent();
 		}
+
+		private void Github_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://github.com/Stukeley");
+		}
 	}
 }

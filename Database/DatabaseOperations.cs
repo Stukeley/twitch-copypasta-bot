@@ -154,7 +154,14 @@ namespace TwitchCopypastaBot.Database
 
 			using (var db = new CopypastaContext())
 			{
-				var latest = (from c in db.Copypastas orderby c.DateAdded descending select c).First();
+				var latest = (from c in db.Copypastas orderby c.DateAdded descending select c).FirstOrDefault();
+
+				// TODO: temporary fix, change later
+				if (latest == default)
+				{
+					return DateTime.Now;
+				}
+
 				date = latest.DateAdded;
 			}
 

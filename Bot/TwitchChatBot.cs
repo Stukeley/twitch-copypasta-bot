@@ -21,10 +21,10 @@ namespace TwitchCopypastaBot.Bot
 
 		// Not included in the solution - contains the sensitive bot info (username and API key)
 		// Please never share these anywhere! Keep them out of the solution
-		private string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
+		private static string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
 
 		// Channel name to join
-		private string ChannelName = "Overpow";
+		public static string ChannelName = "Overpow";
 
 		// How many messages before evaluating
 		private const int MaxCapacity = 200;
@@ -34,7 +34,30 @@ namespace TwitchCopypastaBot.Bot
 
 		//! END SETUP
 
-		public static bool IsActive = false;
+		//? For other classes
+
+		public bool IsActive = false;
+		public DateTime DateStarted;
+
+		//? End for other classes
+
+		//? Singleton
+
+		private static TwitchChatBot _instance = null;
+
+		public static TwitchChatBot Instance
+		{
+			get
+			{
+				if (_instance == null)
+				{
+					_instance = new TwitchChatBot();
+				}
+				return _instance;
+			}
+		}
+
+		//? End singleton
 
 		private static Logger _logger;
 		private static int _logId = 1;
@@ -135,6 +158,7 @@ namespace TwitchCopypastaBot.Bot
 			_client.Connect();
 
 			IsActive = true;
+			DateStarted = DateTime.Now;
 		}
 
 		private void _client_OnConnected(object sender, TwitchLib.Client.Events.OnConnectedArgs e)
@@ -160,7 +184,7 @@ namespace TwitchCopypastaBot.Bot
 
 			_allMessages.Add(message);
 
-			if (_allMessages.Count >= 200)
+			if (_allMessages.Count >= MaxCapacity)
 			{
 				EvaluateAllMessages();
 			}

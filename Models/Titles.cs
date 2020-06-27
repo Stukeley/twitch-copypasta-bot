@@ -7,6 +7,10 @@
 
 		public static string MainPageTitle = "Strona główna";
 
+		public static string BrowsePageTitle = "Przegląd";
+
+		public static string EditPageTitle = "Edycja";
+
 		public static string ActionsPageTitle = "Akcje";
 	}
 }

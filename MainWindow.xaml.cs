@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,7 +23,7 @@ namespace TwitchCopypastaBot
 		{
 			InitializeComponent();
 
-			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
+			//ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
 		}
 
 		private void ChangeContent(UserControl newPage, string title)
@@ -39,12 +40,12 @@ namespace TwitchCopypastaBot
 
 		private void Browse_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-
+			// Wszystkie w jednym miejscu jakoś
 		}
 
 		private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-
+			// wyszukiwarka po tytule lub zawartości z możliwością edycji
 		}
 
 		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)

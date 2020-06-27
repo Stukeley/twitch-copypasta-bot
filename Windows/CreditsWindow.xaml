@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
-        mc:Ignorable="d" Height="400" Width="400" Title="O autorze" ResizeMode="NoResize">
+		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="200" Width="200" Title="O autorze" ResizeMode="NoResize">
     <Grid>
-        
-    </Grid>
+		<materialDesign:PackIcon x:Name="Github" Kind="Github" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top"
+				    Margin="40" PreviewMouseUp="Github_PreviewMouseUp"/>
+		<TextBlock Text="Rafał 'Stukeley' Klinowski" FontFamily="Roboto" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+				   FontWeight="Medium" Margin="0,0,0,60" PreviewMouseUp="Github_PreviewMouseUp"/>
+	</Grid>
 </Window>

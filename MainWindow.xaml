@@ -24,8 +24,9 @@
 					</ItemsPanelTemplate>
 				</ListView.ItemsPanel>
 
-				<ListViewItem x:Name="Emote" Height="50" Width="50" Background="Transparent" PreviewMouseUp="Emote_PreviewMouseUp">
-					<Image Source="Resources/5Head.png"/>
+				<ListViewItem x:Name="CurrentPage" Height="50" Width="265">
+					<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Center" FontFamily="Roboto" FontSize="24" 
+							   VerticalAlignment="Center" HorizontalAlignment="Center" Width="265" FontWeight="Bold"/>
 				</ListViewItem>
 
 				<ListViewItem x:Name="Homepage" Height="50" PreviewMouseUp="Homepage_PreviewMouseUp" Width="120">
@@ -55,15 +56,11 @@
 						<TextBlock Text="Akcje" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
 					</StackPanel>
 				</ListViewItem>
-				
-				<ListViewItem x:Name="CurrentPage" Height="50" Width="265">
-					<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Center" FontFamily="Roboto" FontSize="24" 
-							   VerticalAlignment="Center" HorizontalAlignment="Center" Width="265" FontWeight="Bold"/>
-				</ListViewItem>
 			</ListView>
 		</Grid>
 
 		<Grid x:Name="ContentGrid" Width="794" Height="371" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+			<Image Source="Resources/5Head_2.png" Width="750" Height="350"/>
 		</Grid>
 	</Grid>
 </Window>

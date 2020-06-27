@@ -157,6 +157,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Migrations\202006271836068_InitialCreate.cs" />
+    <Compile Include="Migrations\202006271836068_InitialCreate.designer.cs">
+      <DependentUpon>202006271836068_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202006271938168_AddNewFields.cs" />
+    <Compile Include="Migrations\202006271938168_AddNewFields.designer.cs">
+      <DependentUpon>202006271938168_AddNewFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Titles.cs" />
     <Compile Include="Windows\ActionsPage.xaml.cs">
       <DependentUpon>ActionsPage.xaml</DependentUpon>
@@ -213,6 +222,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Migrations\202006271836068_InitialCreate.resx">
+      <DependentUpon>202006271836068_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202006271938168_AddNewFields.resx">
+      <DependentUpon>202006271938168_AddNewFields.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -228,6 +243,7 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="favicon.ico" />
+    <Resource Include="Resources\5Head_2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\5Head.png" />

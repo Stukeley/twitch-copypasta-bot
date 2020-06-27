@@ -29,13 +29,13 @@ namespace TwitchCopypastaBot.Windows
 
 		private void RefreshTextBlocks()
 		{
-			CopypastaBotActive.Text = (Bot.TwitchChatBot.IsActive ? "Witaj. Bot aktywny!" : "Witaj. Bot jest obecnie nieaktywny.");
+			CopypastaBotActive.Text = (Bot.TwitchChatBot.Instance.IsActive ? "Witaj. Bot aktywny!" : "Witaj. Bot jest obecnie nieaktywny.");
 
 			int copypastasInDb, unnamedCopypatasInDb;
 			string lastCopypastaDateAdded;
 
 			copypastasInDb = DatabaseOperations.GetCopypastaCount();
-			lastCopypastaDateAdded = DatabaseOperations.GetLastCopypastaDate().ToString("0:MM/dd/yy H:mm:ss");
+			lastCopypastaDateAdded = DatabaseOperations.GetLastCopypastaDate().ToString("dd/MM/yy H:mm:ss");
 			unnamedCopypatasInDb = DatabaseOperations.GetUnnamedCopypastaCount();
 
 			CopypastaCountText.Text = CopypastaCountText.Text.Replace("[0]", copypastasInDb.ToString());
