@@ -24,6 +24,6 @@ A lot.
 
 # Specyfikacja Techniczna
 1. .NET Framework 4.8
-2. WPF & Material Design http://materialdesigninxaml.net/)
+2. WPF & Material Design (http://materialdesigninxaml.net/)
 3. Entity Framework 6 (podejście Code First)
 4. TwitchLib (https://github.com/TwitchLib/TwitchLib)
