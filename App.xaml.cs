@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TwitchCopypastaBot.Bot;
 
 namespace TwitchCopypastaBot
 {
@@ -13,5 +14,12 @@ namespace TwitchCopypastaBot
 	/// </summary>
 	public partial class App : Application
 	{
+		private void Application_Exit(object sender, ExitEventArgs e)
+		{
+			if (TwitchChatBot.Instance.IsActive)
+			{
+				TwitchChatBot.Instance.Disconnect();
+			}
+		}
 	}
 }

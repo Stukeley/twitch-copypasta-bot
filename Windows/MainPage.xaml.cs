@@ -27,6 +27,7 @@ namespace TwitchCopypastaBot.Windows
 			RefreshTextBlocks();
 		}
 
+		// TODO: make this async
 		private void RefreshTextBlocks()
 		{
 			CopypastaBotActive.Text = (Bot.TwitchChatBot.Instance.IsActive ? "Witaj. Bot aktywny!" : "Witaj. Bot jest obecnie nieaktywny.");

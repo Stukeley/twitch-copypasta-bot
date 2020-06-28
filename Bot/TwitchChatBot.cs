@@ -74,9 +74,9 @@ namespace TwitchCopypastaBot.Bot
 
 		static TwitchChatBot()
 		{
-			string fileName = "TwitchCopypastaBot Logs " + DateTime.Now.ToString();
+			string fileName = "TwitchCopypastaBot Log" + DateTime.Now.ToString().Replace(':', '.') + ".txt";
+
 			_logger = new Logger(fileName);
-			Models.Titles.LogsFileName = fileName;
 		}
 
 		public TwitchChatBot()
@@ -87,10 +87,9 @@ namespace TwitchCopypastaBot.Bot
 		// TODO: detect duplicate messages (get list of all from current database every time this method is called)
 		private void EvaluateAllMessages()
 		{
-			int currentCount = 0;
-
 			for (int i = 0; i < _allMessages.Count; i++)
 			{
+				int currentCount = 0;
 				var currentMessage = _allMessages[i];
 
 				for (int j = i + 1; j < _allMessages.Count; j++)
@@ -120,17 +119,28 @@ namespace TwitchCopypastaBot.Bot
 				// Update the database
 				DatabaseOperations.UpdateDatabaseFromList(_copypastas);
 			}
+
+			_logger.Log(_logId++, $"Added {_copypastas.Count} new copypastas", DateTime.Now);
+
+			_allMessages.Clear();
+			_copypastas.Clear();
 		}
 
 		public void Connect()
 		{
 			_logger.Log(_logId++, "Connecting", DateTime.Now);
 
-			string BotUsername, BotToken;
+			string BotUsername, ClientId, BotToken;
+
+			//	Username
+			//	ClientId <- kinda useless actually
+			//	AccessToken
+			//	End of file
 
 			using (var reader = new StreamReader(BotInfoPath))
 			{
 				BotUsername = reader.ReadLine();
+				ClientId = reader.ReadLine();
 				BotToken = reader.ReadLine();
 			}
 
@@ -190,13 +200,14 @@ namespace TwitchCopypastaBot.Bot
 			}
 		}
 
-		// Disconnect the bot, leave the channel and update the database.
+		// Disconnect the bot, leave the channel, force evaluation and update the database.
 		public void Disconnect()
 		{
 			_logger.Log(_logId++, "Disconnecting", DateTime.Now);
-			DatabaseOperations.UpdateDatabaseFromList(_copypastas);
-			_client.Disconnect();
 
+			EvaluateAllMessages();
+
+			_client.Disconnect();
 			IsActive = false;
 		}
 	}

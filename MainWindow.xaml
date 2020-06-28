@@ -17,18 +17,18 @@
 
 	<Grid Background="LightGray">
 		<Grid x:Name="TopGrid" Height="50" VerticalAlignment="Top" Background="#15C246">
-			<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+			
+			<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Left" FontFamily="Roboto" FontSize="24" 
+					VerticalAlignment="Center" HorizontalAlignment="Left" Width="265" FontWeight="Bold"
+					   Margin="10,0,0,0"/>
+			
+			<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Right" Margin="0,0,100,0">
 				<ListView.ItemsPanel>
 					<ItemsPanelTemplate>
 						<StackPanel Orientation="Horizontal"/>
 					</ItemsPanelTemplate>
 				</ListView.ItemsPanel>
-
-				<ListViewItem x:Name="CurrentPage" Height="50" Width="265">
-					<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Center" FontFamily="Roboto" FontSize="24" 
-							   VerticalAlignment="Center" HorizontalAlignment="Center" Width="265" FontWeight="Bold"/>
-				</ListViewItem>
-
+				
 				<ListViewItem x:Name="Homepage" Height="50" PreviewMouseUp="Homepage_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="HomeOutline" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>

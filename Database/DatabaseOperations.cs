@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 using TwitchCopypastaBot.Bot;
 using TwitchCopypastaBot.Models;
 
@@ -17,18 +18,35 @@ namespace TwitchCopypastaBot.Database
 	{
 		public static void WritePastasToTextFile(string filePath)
 		{
-			if (!Directory.Exists(filePath))
-			{
-				Directory.CreateDirectory(filePath);
-			}
+			//if (!Directory.Exists(filePath))
+			//{
+			//	Directory.CreateDirectory(filePath);
+			//}
 
 			using (var db = new CopypastaContext())
 			{
-				var query = from c in db.Copypastas select c;
-				foreach (var item in query)
+				if (db.Copypastas.Count() == 0)
 				{
-					File.AppendAllText(filePath, $"{item.Id} {item.Title} {item.Content}");
+					File.AppendAllText(filePath, $"Brak copypast w bazie danych!");
 				}
+				else
+				{
+					var query = from c in db.Copypastas select c;
+					foreach (var item in query)
+					{
+						File.AppendAllText(filePath, $"{item.Id} {item.Title} {item.Content}" + Environment.NewLine);
+					}
+				}
+			}
+		}
+
+		//! WARNING - DEBUG ONLY
+		public static void ClearDatabase()
+		{
+			using (var db = new CopypastaContext())
+			{
+				db.Copypastas.RemoveRange(db.Copypastas);
+				db.SaveChanges();
 			}
 		}
 
@@ -91,7 +109,7 @@ namespace TwitchCopypastaBot.Database
 						}
 					}
 
-					if (found)
+					if (!found)
 					{
 						db.Copypastas.Add(copypastas[i]);
 					}

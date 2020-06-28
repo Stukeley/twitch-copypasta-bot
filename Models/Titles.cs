@@ -3,7 +3,7 @@
 	//TODO: make this into a resource file for possible English language version of this app?
 	static class Titles
 	{
-		public static string LogsFileName;
+		public static string LogsDirectoryName = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Logs";
 
 		public static string MainPageTitle = "Strona główna";
 

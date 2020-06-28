@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,24 +19,26 @@ namespace TwitchCopypastaBot.Logging
 
 		private void InsertLog(LogEntry log)
 		{
-			var directory = Path.GetDirectoryName(_fileName);
-			if (!Directory.Exists(directory))
+			if (!Directory.Exists(Models.Titles.LogsDirectoryName))
 			{
-				Directory.CreateDirectory(directory);
+				Directory.CreateDirectory(Models.Titles.LogsDirectoryName);
 			}
+
+			string filePath = Path.Combine(Models.Titles.LogsDirectoryName, _fileName);
 
 			try
 			{
-				File.AppendAllText(_fileName, $"{log.CreatedTime} {log.Id} {log.Message}" + Environment.NewLine);
+				File.AppendAllText(filePath, $"{log.CreatedTime} {log.Id} {log.Message}" + Environment.NewLine);
 			}
 			catch (Exception)
 			{
+				//how to log an exception that occured during logging? xd
 			}
 		}
 
 		public void Log(int id, string message, DateTime createdTime)
 		{
-			if (string.IsNullOrEmpty(message) || string.IsNullOrEmpty(_fileName))
+			if (string.IsNullOrEmpty(message) || string.IsNullOrEmpty(Models.Titles.LogsDirectoryName) || string.IsNullOrEmpty(_fileName))
 			{
 				return;
 			}

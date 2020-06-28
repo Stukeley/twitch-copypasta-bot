@@ -8,7 +8,7 @@
              d:DesignHeight="371" d:DesignWidth="794"
 			 Background="LightGray"
 			 >
-    <Grid>
+	<Grid>
 		<Image Source="../Resources/5Head_2.png" Width="750" Height="350"/>
 
 		<Button x:Name="StartButton" Content="Uruchom bota" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" HorizontalAlignment="Center"
@@ -26,5 +26,9 @@
 
 		<TextBlock x:Name="TimeConnected" Text="Bot działa od: [1]"  FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" 
 				Margin="50,250,100,0"/>
+
+		<Button x:Name="DebugButton" Content="Zapisz do pliku txt" Width="200" Margin="572,277,22,62" Click="DebugButton_Click"/>
+
+		<Button x:Name="ClearButton" Content="Wyczyść bazę danych" Width="200" Click="ClearButton_Click" Margin="572,322,22,17"/>
 	</Grid>
 </UserControl>

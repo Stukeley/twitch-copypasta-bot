@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TwitchCopypastaBot.Bot;
+using TwitchCopypastaBot.Database;
 
 namespace TwitchCopypastaBot.Windows
 {
@@ -42,7 +43,7 @@ namespace TwitchCopypastaBot.Windows
 			CurrentChannel.Text = CurrentChannel.Text.Replace("[0]", TwitchChatBot.ChannelName);
 			ChangeChannel.Text = ChangeChannel.Text.Replace("[0]", TwitchChatBot.ChannelName);
 
-			TimeConnected.Text = TimeConnected.Text.Replace("[1]", (TwitchChatBot.Instance.DateStarted - DateTime.Now).TotalMinutes.ToString());
+			TimeConnected.Text = TimeConnected.Text.Replace("[1]", (DateTime.Now - TwitchChatBot.Instance.DateStarted).TotalMinutes.ToString("F"));
 		}
 
 		private void ChangeChannelButton_Click(object sender, RoutedEventArgs e)
@@ -70,6 +71,18 @@ namespace TwitchCopypastaBot.Windows
 			}
 
 			RefreshTextBlocks();
+		}
+
+		private void DebugButton_Click(object sender, RoutedEventArgs e)
+		{
+			var filePath = Path.Combine(Models.Titles.LogsDirectoryName, "Copypastas" + DateTime.Now.ToString().Replace(':', '.') + ".txt");
+			DatabaseOperations.WritePastasToTextFile(filePath);
+		}
+
+		private void ClearButton_Click(object sender, RoutedEventArgs e)
+		{
+			//todo: some confirmation?
+			DatabaseOperations.ClearDatabase();
 		}
 	}
 }
