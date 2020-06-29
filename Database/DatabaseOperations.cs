@@ -90,13 +90,21 @@ namespace TwitchCopypastaBot.Database
 			return dict;
 		}
 
-		public static void UpdateDatabaseFromList(List<Copypasta> copypastas)
+		// Returns the amount of pastas added
+		public static int UpdateDatabaseFromList(List<Copypasta> copypastas)
 		{
-			//check for copypastas that have already been added, then add the rest
+			int amount = 0;
 			using (var db = new CopypastaContext())
 			{
 				for (int i = 0; i < copypastas.Count; i++)
 				{
+					//first check if the copypasta is not blacklisted
+					if (Blacklist.BlacklistedMessages.Contains(copypastas[i].Content))
+					{
+						continue;
+					}
+
+					//check for copypastas that have already are in the database
 					var dbCopypastas = db.Copypastas.ToList();
 					bool found = false;
 
@@ -112,11 +120,14 @@ namespace TwitchCopypastaBot.Database
 					if (!found)
 					{
 						db.Copypastas.Add(copypastas[i]);
+						amount++;
 					}
 				}
 
 				db.SaveChanges();
 			}
+
+			return amount;
 		}
 
 		public static void UpdateTitle(List<Copypasta> copypastas, string title, string content)
@@ -159,7 +170,7 @@ namespace TwitchCopypastaBot.Database
 
 			using (var db = new CopypastaContext())
 			{
-				count = (from c in db.Copypastas where c.Title == "" select c).Count();
+				count = (from c in db.Copypastas where c.Title == null select c).Count();
 			}
 
 			return count;

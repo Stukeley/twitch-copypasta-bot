@@ -16,7 +16,7 @@
      FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize">
 
 	<Grid Background="LightGray">
-		<Grid x:Name="TopGrid" Height="50" VerticalAlignment="Top" Background="#15C246">
+		<Grid x:Name="TopGrid" Height="50" VerticalAlignment="Top" Background="#15C246" Panel.ZIndex="10">
 			
 			<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Left" FontFamily="Roboto" FontSize="24" 
 					VerticalAlignment="Center" HorizontalAlignment="Left" Width="265" FontWeight="Bold"

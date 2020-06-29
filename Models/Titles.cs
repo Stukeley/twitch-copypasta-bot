@@ -5,6 +5,8 @@
 	{
 		public static string LogsDirectoryName = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Logs";
 
+		public static string CurrentLogFileName;
+
 		public static string MainPageTitle = "Strona główna";
 
 		public static string BrowsePageTitle = "Przegląd";

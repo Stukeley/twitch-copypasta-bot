@@ -30,5 +30,9 @@
 		<Button x:Name="DebugButton" Content="Zapisz do pliku txt" Width="200" Margin="572,277,22,62" Click="DebugButton_Click"/>
 
 		<Button x:Name="ClearButton" Content="Wyczyść bazę danych" Width="200" Click="ClearButton_Click" Margin="572,322,22,17"/>
+
+		<Button x:Name="ChooseLogsDirectoryButton" Content="Wybierz ścieżkę do zapisu logów" Width="300" Margin="243,277,251,62" Click="ChooseLogsDirectoryButton_Click"/>
+
+		<Button x:Name="ChooseBotInfoDirectoryButton" Content="Wybierz ścieżkę do danych bota" Width="300" Margin="243,322,251,17" Click="ChooseBotInfoDirectoryButton_Click"/>
 	</Grid>
 </UserControl>

@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Reflection;
 using System.Diagnostics;
 using TwitchCopypastaBot.Database;
+using TwitchCopypastaBot.Models;
 
 namespace TwitchCopypastaBot.Windows
 {
@@ -54,12 +55,12 @@ namespace TwitchCopypastaBot.Windows
 
 		private void SeeLogsButton_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			// Opens up the text file that contains Bot Logs created by _logger
+			var path = Path.Combine(Titles.LogsDirectoryName, Titles.CurrentLogFileName);
 
-			////var directory = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-			////var file = Path.Combine(directory, Models.Titles.LogsFileName);
-
-			////Process.Start(file);
+			if (File.Exists(path))
+			{
+				Process.Start(path);
+			}
 		}
 	}
 }

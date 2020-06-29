@@ -21,6 +21,7 @@ namespace TwitchCopypastaBot.Bot
 
 		// Not included in the solution - contains the sensitive bot info (username and API key)
 		// Please never share these anywhere! Keep them out of the solution
+		//TODO: in-app menu to pick this (like in Windows)
 		private static string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
 
 		// Channel name to join
@@ -30,7 +31,7 @@ namespace TwitchCopypastaBot.Bot
 		private const int MaxCapacity = 200;
 
 		// Minimum count of duplicates for a message to be considered a "pasta"
-		private const int MinCount = 15;
+		private const int MinCount = 10;
 
 		//! END SETUP
 
@@ -76,6 +77,8 @@ namespace TwitchCopypastaBot.Bot
 		{
 			string fileName = "TwitchCopypastaBot Log" + DateTime.Now.ToString().Replace(':', '.') + ".txt";
 
+			Titles.CurrentLogFileName = fileName;
+
 			_logger = new Logger(fileName);
 		}
 
@@ -85,6 +88,7 @@ namespace TwitchCopypastaBot.Bot
 
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
 		// TODO: detect duplicate messages (get list of all from current database every time this method is called)
+		// TODO: use blacklist here (maybe make it into a list as the program starts?)
 		private void EvaluateAllMessages()
 		{
 			for (int i = 0; i < _allMessages.Count; i++)
@@ -104,6 +108,15 @@ namespace TwitchCopypastaBot.Bot
 
 				if (currentCount >= MinCount)
 				{
+					//check if the message is not blacklisted
+					//! important note - only messages *exactly the same* as the blacklisted will not get added
+					//! this means that a message having other content than just these blacklisted (emotes?), or a combination of blacklisted keywords, will get added
+
+					if (Blacklist.BlacklistedMessages.Contains(currentMessage))
+					{
+						continue;
+					}
+
 					var pasta = new Copypasta()
 					{
 						Content = currentMessage,
@@ -114,33 +127,22 @@ namespace TwitchCopypastaBot.Bot
 				}
 			}
 
-			if (_copypastas.Count > 0)
-			{
-				// Update the database
-				DatabaseOperations.UpdateDatabaseFromList(_copypastas);
-			}
-
-			_logger.Log(_logId++, $"Added {_copypastas.Count} new copypastas", DateTime.Now);
-
 			_allMessages.Clear();
-			_copypastas.Clear();
 		}
 
 		public void Connect()
 		{
 			_logger.Log(_logId++, "Connecting", DateTime.Now);
 
-			string BotUsername, ClientId, BotToken;
+			string BotUsername, BotToken;
 
 			//	Username
-			//	ClientId <- kinda useless actually
 			//	AccessToken
 			//	End of file
 
 			using (var reader = new StreamReader(BotInfoPath))
 			{
 				BotUsername = reader.ReadLine();
-				ClientId = reader.ReadLine();
 				BotToken = reader.ReadLine();
 			}
 
@@ -206,6 +208,18 @@ namespace TwitchCopypastaBot.Bot
 			_logger.Log(_logId++, "Disconnecting", DateTime.Now);
 
 			EvaluateAllMessages();
+
+			int added = 0;
+
+			if (_copypastas.Count > 0)
+			{
+				// Update the database
+				added = DatabaseOperations.UpdateDatabaseFromList(_copypastas);
+			}
+
+			_logger.Log(_logId++, $"Added {added} new copypastas", DateTime.Now);
+
+			_copypastas.Clear();
 
 			_client.Disconnect();
 			IsActive = false;

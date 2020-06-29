@@ -43,7 +43,8 @@ namespace TwitchCopypastaBot.Windows
 			CurrentChannel.Text = CurrentChannel.Text.Replace("[0]", TwitchChatBot.ChannelName);
 			ChangeChannel.Text = ChangeChannel.Text.Replace("[0]", TwitchChatBot.ChannelName);
 
-			TimeConnected.Text = TimeConnected.Text.Replace("[1]", (DateTime.Now - TwitchChatBot.Instance.DateStarted).TotalMinutes.ToString("F"));
+			TimeConnected.Text = TimeConnected.Text.Replace("[1]", TwitchChatBot.Instance.DateStarted.Hour.ToString() + ":" +
+				TwitchChatBot.Instance.DateStarted.Minute.ToString());
 		}
 
 		private void ChangeChannelButton_Click(object sender, RoutedEventArgs e)
@@ -83,6 +84,34 @@ namespace TwitchCopypastaBot.Windows
 		{
 			//todo: some confirmation?
 			DatabaseOperations.ClearDatabase();
+		}
+
+		private void ChooseLogsDirectoryButton_Click(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				var result = dialog.ShowDialog();
+				if (result == System.Windows.Forms.DialogResult.OK)
+				{
+					//make it the new Directory for logs (file name stays the same)
+					//gets only the folder
+					var path = Path.GetFileName(dialog.SelectedPath);
+				}
+			}
+		}
+
+		private void ChooseBotInfoDirectoryButton_Click(object sender, RoutedEventArgs e)
+		{
+			using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+			{
+				var result = dialog.ShowDialog();
+				if (result == System.Windows.Forms.DialogResult.OK)
+				{
+					//make it the new Directory for getting bot info
+					//gets folder and the file name
+					var path = dialog.SelectedPath;
+				}
+			}
 		}
 	}
 }
