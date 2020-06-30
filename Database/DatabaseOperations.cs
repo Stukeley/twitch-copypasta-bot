@@ -130,22 +130,21 @@ namespace TwitchCopypastaBot.Database
 			return amount;
 		}
 
-		public static void UpdateTitle(List<Copypasta> copypastas, string title, string content)
+		// Updates a given Copypasta - we assume the Id stays the same and other parameters can be chagned
+		public static void UpdateCopypasta(Copypasta newPasta)
 		{
-			//check if the given pasta exists, then add a title to it (in the static list of copypastas), then update database
-
-			for (int i = 0; i < copypastas.Count; i++)
+			using (var db = new CopypastaContext())
 			{
-				if (copypastas[i].Content == content)
+				var result = (from c in db.Copypastas where c.Id == newPasta.Id select c).SingleOrDefault();
+				if (result != null)
 				{
-					var updated = new Copypasta()
-					{
-						Title = title,
-						Content = content
-					};
-					copypastas[i] = updated;
-					UpdateDatabaseFromList(copypastas);
-					break;
+					result.Title = newPasta.Title;
+					result.Content = newPasta.Content;
+					result.DateAdded = newPasta.DateAdded;
+					result.IsFavourite = newPasta.IsFavourite;
+					result.ChannelFrom = newPasta.ChannelFrom;
+
+					db.SaveChanges();
 				}
 			}
 		}

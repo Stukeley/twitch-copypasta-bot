@@ -21,17 +21,16 @@ namespace TwitchCopypastaBot.Bot
 
 		// Not included in the solution - contains the sensitive bot info (username and API key)
 		// Please never share these anywhere! Keep them out of the solution
-		//TODO: in-app menu to pick this (like in Windows)
-		private static string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
+		public static string BotInfoPath = @"C:\Programowanie\Stukeley\twitch-copypasta-bot\Bot\BotInfo.txt";
 
 		// Channel name to join
 		public static string ChannelName = "Overpow";
 
 		// How many messages before evaluating
-		private const int MaxCapacity = 200;
+		public static int MaxCapacity = 100;
 
 		// Minimum count of duplicates for a message to be considered a "pasta"
-		private const int MinCount = 10;
+		public static int MinCount = 5;
 
 		//! END SETUP
 
@@ -87,8 +86,6 @@ namespace TwitchCopypastaBot.Bot
 		}
 
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
-		// TODO: detect duplicate messages (get list of all from current database every time this method is called)
-		// TODO: use blacklist here (maybe make it into a list as the program starts?)
 		private void EvaluateAllMessages()
 		{
 			for (int i = 0; i < _allMessages.Count; i++)

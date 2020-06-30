@@ -171,8 +171,14 @@
     <Compile Include="Windows\ActionsPage.xaml.cs">
       <DependentUpon>ActionsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CopypastaBlock.xaml.cs">
+      <DependentUpon>CopypastaBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreditsWindow.xaml.cs">
       <DependentUpon>CreditsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\EditCopypasta.xaml.cs">
+      <DependentUpon>EditCopypasta.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -198,7 +204,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\CopypastaBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\CreditsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\EditCopypasta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,7 +249,7 @@
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>

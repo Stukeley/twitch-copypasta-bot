@@ -11,8 +11,10 @@
 
 		public static string BrowsePageTitle = "Przegląd";
 
-		public static string EditPageTitle = "Edycja";
+		public static string EditPageTitle = "Dodawanie";
 
 		public static string ActionsPageTitle = "Akcje";
+
+		public static string Pasta_NoTitle = "Brak tytułu";
 	}
 }

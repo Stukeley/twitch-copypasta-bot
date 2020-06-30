@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
 		xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="200" Width="200" Title="O autorze" ResizeMode="NoResize">
-    <Grid>
+    <Grid PreviewMouseUp="Github_PreviewMouseUp">
 		<materialDesign:PackIcon x:Name="Github" Kind="Github" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top"
 				    Margin="40" PreviewMouseUp="Github_PreviewMouseUp"/>
 		<TextBlock Text="Rafał 'Stukeley' Klinowski" FontFamily="Roboto" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Bottom" 

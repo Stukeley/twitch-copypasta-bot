@@ -13,7 +13,8 @@
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize">
+     FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize"
+	 Closing="Window_Closing">
 
 	<Grid Background="LightGray">
 		<Grid x:Name="TopGrid" Height="50" VerticalAlignment="Top" Background="#15C246" Panel.ZIndex="10">
@@ -43,10 +44,10 @@
 					</StackPanel>
 				</ListViewItem>
 
-				<ListViewItem x:Name="Edit" Height="50" PreviewMouseUp="Edit_PreviewMouseUp" Width="120">
+				<ListViewItem x:Name="Add" Height="50" PreviewMouseUp="Add_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="Pen" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-						<TextBlock Text="Edytuj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
+						<TextBlock Text="Dodaj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
 					</StackPanel>
 				</ListViewItem>
 

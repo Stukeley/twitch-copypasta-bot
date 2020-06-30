@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace TwitchCopypastaBot.Models
 {
-	internal class Copypasta
+	public class Copypasta
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		[Key]

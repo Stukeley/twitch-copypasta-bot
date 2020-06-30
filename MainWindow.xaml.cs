@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TwitchCopypastaBot.Bot;
+using TwitchCopypastaBot.Models;
 using TwitchCopypastaBot.Windows;
 
 namespace TwitchCopypastaBot
@@ -43,9 +45,9 @@ namespace TwitchCopypastaBot
 			// Wszystkie w jednym miejscu jakoś
 		}
 
-		private void Edit_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+		private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			// wyszukiwarka po tytule lub zawartości z możliwością edycji
+			// Dodawanie nowej pasty bez bota
 		}
 
 		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -57,6 +59,16 @@ namespace TwitchCopypastaBot
 		{
 			var credits = new CreditsWindow();
 			credits.Show();
+		}
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			// Save strings to resource file
+			// todo: make this work xd
+			Properties.Settings.Default.LogsFolderPath = Titles.LogsDirectoryName;
+			Properties.Settings.Default.BotInfoPath = TwitchChatBot.BotInfoPath;
+			Properties.Settings.Default.Save();
+			Properties.Settings.Default.Reload();
 		}
 	}
 }

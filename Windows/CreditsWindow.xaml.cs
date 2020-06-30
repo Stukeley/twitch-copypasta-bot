@@ -14,7 +14,6 @@ using System.Windows.Shapes;
 
 namespace TwitchCopypastaBot.Windows
 {
-	// TODO: github?
 	public partial class CreditsWindow : Window
 	{
 		public CreditsWindow()

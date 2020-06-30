@@ -1,0 +1,28 @@
+﻿<Window x:Class="TwitchCopypastaBot.Windows.EditCopypasta"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Background="Snow" Title="Edycja" x:Name="EditWindow"
+        d:DesignHeight="371" d:DesignWidth="794"
+		Closing="EditWindow_Closing" ResizeMode="NoResize">
+    <Grid>
+		<TextBox x:Name="TitleBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="764" Margin="5" FontFamily="Roboto" FontWeight="Medium" FontSize="16"
+				 Text="TemporaryTitleThatIsTooLongToFit" materialDesign:HintAssist.Hint="TYTUŁ"/>
+
+		<TextBox x:Name="ChannelFromBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="5,50" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
+				 Text="Stukeleyak"/>
+
+		<DatePicker x:Name="DateAddedPicker" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="280,50" FontFamily="Roboto" FontWeight="Regular"
+					FontSize="14"/>
+
+		<CheckBox x:Name="FavouriteCheckbox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="555,50,0,0" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
+				  Content="Ulubiona"/>
+ 
+		<TextBox x:Name="ContentBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="774" Height="220" Margin="5,110" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
+				 TextWrapping="Wrap"
+				 Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur luctus, tortor viverra dictum ultricies, velit erat viverra eros, viverra tempor massa neque ac arcu. Pellentesque non sapien sem."/>
+	</Grid>
+</Window>

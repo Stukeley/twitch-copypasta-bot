@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using TwitchCopypastaBot.Bot;
 using TwitchCopypastaBot.Database;
+using TwitchCopypastaBot.Models;
 
 namespace TwitchCopypastaBot.Windows
 {
@@ -82,7 +83,7 @@ namespace TwitchCopypastaBot.Windows
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
-			//todo: some confirmation?
+			//todo: some confirmation? + this doesn't work (doesn't delete Ids, numeration keeps going)
 			DatabaseOperations.ClearDatabase();
 		}
 
@@ -96,6 +97,7 @@ namespace TwitchCopypastaBot.Windows
 					//make it the new Directory for logs (file name stays the same)
 					//gets only the folder
 					var path = Path.GetFileName(dialog.SelectedPath);
+					Titles.CurrentLogFileName = path;
 				}
 			}
 		}
@@ -110,6 +112,7 @@ namespace TwitchCopypastaBot.Windows
 					//make it the new Directory for getting bot info
 					//gets folder and the file name
 					var path = dialog.SelectedPath;
+					TwitchChatBot.BotInfoPath = path;
 				}
 			}
 		}
