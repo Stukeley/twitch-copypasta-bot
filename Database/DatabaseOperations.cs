@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Navigation;
-using TwitchCopypastaBot.Bot;
 using TwitchCopypastaBot.Models;
 
 namespace TwitchCopypastaBot.Database
@@ -74,20 +66,20 @@ namespace TwitchCopypastaBot.Database
 			}
 		}
 
-		public static Dictionary<int, Tuple<string, string>> WritePastasToDictionary()
+		public static List<Copypasta> WritePastasToList()
 		{
-			var dict = new Dictionary<int, Tuple<string, string>>();
+			var lst = new List<Copypasta>();
 
 			using (var db = new CopypastaContext())
 			{
 				var query = from c in db.Copypastas select c;
 				foreach (var item in query)
 				{
-					dict.Add(item.Id, new Tuple<string, string>(item.Title, item.Content));
+					lst.Add(item);
 				}
 			}
 
-			return dict;
+			return lst;
 		}
 
 		// Returns the amount of pastas added

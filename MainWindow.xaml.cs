@@ -1,24 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.RightsManagement;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using TwitchCopypastaBot.Bot;
 using TwitchCopypastaBot.Models;
 using TwitchCopypastaBot.Windows;
 
 namespace TwitchCopypastaBot
 {
+	//todo: make buttons green
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
@@ -43,6 +32,7 @@ namespace TwitchCopypastaBot
 		private void Browse_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
 			// Wszystkie w jednym miejscu jakoś
+			ChangeContent(new BrowsePage(), Models.Titles.BrowsePageTitle);
 		}
 
 		private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)

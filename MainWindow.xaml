@@ -21,7 +21,7 @@
 			
 			<TextBlock x:Name="CurrentPageText" Text="Placeholder" TextAlignment="Left" FontFamily="Roboto" FontSize="24" 
 					VerticalAlignment="Center" HorizontalAlignment="Left" Width="265" FontWeight="Bold"
-					   Margin="10,0,0,0"/>
+					   Margin="10,0,0,0" PreviewMouseUp="Emote_PreviewMouseUp"/>
 			
 			<ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Right" Margin="0,0,100,0">
 				<ListView.ItemsPanel>

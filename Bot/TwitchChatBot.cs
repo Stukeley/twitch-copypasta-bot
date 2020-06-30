@@ -1,12 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using TwitchCopypastaBot.Logging;
+using System.IO;
 using TwitchCopypastaBot.Database;
+using TwitchCopypastaBot.Logging;
 using TwitchCopypastaBot.Models;
 using TwitchLib.Client;
 using TwitchLib.Client.Models;
