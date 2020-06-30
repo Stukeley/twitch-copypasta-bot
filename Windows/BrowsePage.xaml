@@ -34,7 +34,7 @@
 					  VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
 			<Button x:Name="ResetSearch" Width="160" Content="Resetuj filtry" FontFamily="Roboto" FontSize="16" FontWeight="Medium"
-					Click="ResetSearch_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,170"/>
+					Click="ResetSearch_Click" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,170" Background="#15C246"/>
 		</Grid>
 	</Grid>
 </UserControl>

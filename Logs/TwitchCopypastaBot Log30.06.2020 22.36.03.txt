@@ -1,0 +1,21 @@
+30.06.2020 22:36:04 1 Connecting
+30.06.2020 20:36:04 2 Connecting to: wss://irc-ws.chat.twitch.tv:443
+30.06.2020 20:36:05 3 Should be connected!
+30.06.2020 20:36:05 4 Joining channel: overpow
+30.06.2020 20:36:05 5 Received: :tmi.twitch.tv 001 stukeleyak :Welcome, GLHF!
+30.06.2020 20:36:05 6 Received: :tmi.twitch.tv 002 stukeleyak :Your host is tmi.twitch.tv
+30.06.2020 20:36:05 7 Received: :tmi.twitch.tv 003 stukeleyak :This server is rather new
+30.06.2020 20:36:05 8 Received: :tmi.twitch.tv 004 stukeleyak :-
+30.06.2020 22:36:05 9 Bot connected
+30.06.2020 20:36:05 10 Received: :tmi.twitch.tv 375 stukeleyak :-
+30.06.2020 20:36:05 11 Received: :tmi.twitch.tv 372 stukeleyak :You are in a maze of twisty passages, all alike.
+30.06.2020 20:36:05 12 Received: :tmi.twitch.tv 376 stukeleyak :>
+30.06.2020 20:36:05 13 Received: :tmi.twitch.tv CAP * ACK :twitch.tv/membership
+30.06.2020 20:36:05 14 Unaccounted for: :tmi.twitch.tv CAP * ACK :twitch.tv/membership (please create a TwitchLib GitHub issue :P)
+30.06.2020 20:36:05 15 Received: :tmi.twitch.tv CAP * ACK :twitch.tv/commands
+30.06.2020 20:36:05 16 Unaccounted for: :tmi.twitch.tv CAP * ACK :twitch.tv/commands (please create a TwitchLib GitHub issue :P)
+30.06.2020 20:36:05 17 Received: :tmi.twitch.tv CAP * ACK :twitch.tv/tags
+30.06.2020 20:36:05 18 Unaccounted for: :tmi.twitch.tv CAP * ACK :twitch.tv/tags (please create a TwitchLib GitHub issue :P)
+30.06.2020 22:36:06 19 Disconnecting
+30.06.2020 22:36:06 20 Added 0 new copypastas
+30.06.2020 20:36:06 21 Disconnect Twitch Chat Client...
