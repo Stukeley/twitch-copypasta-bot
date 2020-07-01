@@ -101,6 +101,9 @@ namespace TwitchCopypastaBot.Windows
 
 				block.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
 
+				block.HorizontalAlignment = HorizontalAlignment.Left;
+				block.VerticalAlignment = VerticalAlignment.Top;
+
 				var gridColumn = i % BlocksPerRow;
 				i++;
 

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -25,7 +26,17 @@ namespace TwitchCopypastaBot.Windows
 			string lastCopypastaDateAdded;
 
 			copypastasInDb = DatabaseOperations.GetCopypastaCount();
-			lastCopypastaDateAdded = DatabaseOperations.GetLastCopypastaDate().ToString("dd/MM/yy H:mm:ss");
+
+			DateTime? lastCopypastaDate = DatabaseOperations.GetLastCopypastaDate();
+			if (lastCopypastaDate == null)
+			{
+				lastCopypastaDateAdded = "Brak danych";
+			}
+			else
+			{
+				lastCopypastaDateAdded = lastCopypastaDate.Value.ToString("dd/MM/yy H:mm:ss");
+			}
+
 			unnamedCopypatasInDb = DatabaseOperations.GetUnnamedCopypastaCount();
 
 			CopypastaCountText.Text = CopypastaCountText.Text.Replace("[0]", copypastasInDb.ToString());
@@ -43,11 +54,9 @@ namespace TwitchCopypastaBot.Windows
 
 		private void SeeLogsButton_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			var path = Path.Combine(Titles.LogsDirectoryName, Titles.CurrentLogFileName);
-
-			if (File.Exists(path))
+			if (Directory.Exists(Titles.LogsDirectoryName))
 			{
-				Process.Start(path);
+				Process.Start(Titles.LogsDirectoryName);
 			}
 		}
 	}

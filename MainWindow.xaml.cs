@@ -7,14 +7,13 @@ using TwitchCopypastaBot.Windows;
 
 namespace TwitchCopypastaBot
 {
-	//todo: make buttons green
 	public partial class MainWindow : Window
 	{
 		public MainWindow()
 		{
 			InitializeComponent();
 
-			//ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
+			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
 		}
 
 		private void ChangeContent(UserControl newPage, string title)
@@ -57,9 +56,9 @@ namespace TwitchCopypastaBot
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
 			// Save strings to resource file
-			// todo: make this work xd
-			Properties.Settings.Default.LogsFolderPath = Titles.LogsDirectoryName;
-			Properties.Settings.Default.BotInfoPath = TwitchChatBot.BotInfoPath;
+			// todo: make this work xd (why doesn't it already?)
+			Properties.Settings.Default["LogsFolderPath"] = Titles.LogsDirectoryName;
+			Properties.Settings.Default["BotInfoPath"] = TwitchChatBot.BotInfoPath;
 			Properties.Settings.Default.Save();
 			Properties.Settings.Default.Reload();
 		}

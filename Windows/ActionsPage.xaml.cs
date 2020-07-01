@@ -45,9 +45,12 @@ namespace TwitchCopypastaBot.Windows
 			{
 				TwitchChatBot.ChannelName = ChangeChannel.Text;
 
-				TwitchChatBot.Instance.Disconnect();
-				Thread.Sleep(1000);
-				TwitchChatBot.Instance.Connect();
+				if (TwitchChatBot.Instance.IsActive)
+				{
+					TwitchChatBot.Instance.Disconnect();
+					Thread.Sleep(1000);
+					TwitchChatBot.Instance.Connect();
+				}
 			}
 		}
 
@@ -73,8 +76,12 @@ namespace TwitchCopypastaBot.Windows
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
-			//todo: some confirmation? + this doesn't work (doesn't delete Ids, numeration keeps going)
-			DatabaseOperations.ClearDatabase();
+			var result = MessageBox.Show("Na pewno chcesz usunąć całą bazę copypast?", "Potwierdź usunięcie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+			if (result == MessageBoxResult.Yes)
+			{
+				DatabaseOperations.ClearDatabase();
+			}
 		}
 
 		private void ChooseLogsDirectoryButton_Click(object sender, RoutedEventArgs e)

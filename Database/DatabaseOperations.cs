@@ -10,11 +10,6 @@ namespace TwitchCopypastaBot.Database
 	{
 		public static void WritePastasToTextFile(string filePath)
 		{
-			//if (!Directory.Exists(filePath))
-			//{
-			//	Directory.CreateDirectory(filePath);
-			//}
-
 			using (var db = new CopypastaContext())
 			{
 				if (db.Copypastas.Count() == 0)
@@ -56,6 +51,19 @@ namespace TwitchCopypastaBot.Database
 				}
 
 				db.Copypastas.Add(copypasta);
+				db.SaveChanges();
+			}
+		}
+
+		public static void DeleteCopypasta(Copypasta copypasta)
+		{
+			// Delete the given copypasta from the database
+
+			using (var db = new CopypastaContext())
+			{
+				var pasta = (from c in db.Copypastas where c.Id == copypasta.Id select c).SingleOrDefault();
+
+				db.Copypastas.Remove(pasta);
 				db.SaveChanges();
 			}
 		}
@@ -142,7 +150,7 @@ namespace TwitchCopypastaBot.Database
 
 			using (var db = new CopypastaContext())
 			{
-				count = (from c in db.Copypastas select c).Count();
+				count = db.Copypastas.Count();
 			}
 
 			return count;
@@ -151,29 +159,28 @@ namespace TwitchCopypastaBot.Database
 		public static int GetUnnamedCopypastaCount()
 		{
 			// Get the amount of copypastas in the database that do not have a title
-			int count;
+			int count = 0;
 
 			using (var db = new CopypastaContext())
 			{
-				count = (from c in db.Copypastas where c.Title == null select c).Count();
+				count = (from c in db.Copypastas where string.IsNullOrEmpty(c.Title) select c).Count();
 			}
 
 			return count;
 		}
 
-		public static DateTime GetLastCopypastaDate()
+		public static DateTime? GetLastCopypastaDate()
 		{
 			// Returns the DateTime for the most recently added copypasta
-			DateTime date;
+			DateTime? date = null;
 
 			using (var db = new CopypastaContext())
 			{
 				var latest = (from c in db.Copypastas orderby c.DateAdded descending select c).FirstOrDefault();
 
-				// TODO: temporary fix, change later
-				if (latest == default)
+				if (latest.DateAdded == default)
 				{
-					return DateTime.Now;
+					return null;
 				}
 
 				date = latest.DateAdded;

@@ -57,5 +57,14 @@ namespace TwitchCopypastaBot.Windows
 
 			DatabaseOperations.UpdateCopypasta(Copypasta);
 		}
+
+		private void DeleteCopypasta_Click(object sender, RoutedEventArgs e)
+		{
+			var result = MessageBox.Show("Na pewno chcesz usunąć tą pastę z bazy?", "Potwierdź usunięcie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			if (result == MessageBoxResult.Yes)
+			{
+				DatabaseOperations.DeleteCopypasta(Copypasta);
+			}
+		}
 	}
 }
