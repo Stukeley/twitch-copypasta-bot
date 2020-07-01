@@ -5,16 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
              mc:Ignorable="d" 
-             d:DesignHeight="371" d:DesignWidth="794"
+             d:DesignHeight="371" d:DesignWidth="794" MaxWidth="794"
 			 Background="LightGray">
     <Grid>
-		<ScrollViewer x:Name="CopypastaViewer" Width="594" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
-			<Grid x:Name="CopypastaGrid">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
-				</Grid.ColumnDefinitions>
+		<ScrollViewer x:Name="CopypastaViewer" Width="594" Margin="0,10,0,0"
+					  HorizontalAlignment="Left" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
+			<Grid x:Name="CopypastaGrid" MaxWidth="594">
 			</Grid>
 		</ScrollViewer>
 

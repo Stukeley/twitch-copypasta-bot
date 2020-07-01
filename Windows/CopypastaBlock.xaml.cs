@@ -29,7 +29,7 @@ namespace TwitchCopypastaBot.Windows
 				ContentBlock.Text = Copypasta.Content;
 				DateBlock.Text = Copypasta.DateAdded.ToString("dd.MM.y H:mm");
 
-				if (Copypasta.Title == null)
+				if (string.IsNullOrEmpty(Copypasta.Title))
 				{
 					TitleBlock.Text = Titles.Pasta_NoTitle;
 				}

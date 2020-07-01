@@ -42,25 +42,19 @@ namespace TwitchCopypastaBot.Database
 			}
 		}
 
-		public static void AddToDatabase(string title, string content)
+		public static void AddToDatabase(Copypasta copypasta)
 		{
 			//First check if this pasta is already there (title doesn't matter because it isn't key anyway, it can appear multiple times)
 
 			using (var db = new CopypastaContext())
 			{
-				var query = from c in db.Copypastas where c.Content.Contains(content) select c;
+				var query = from c in db.Copypastas where c.Content.Contains(copypasta.Content) select c;
 				if (query.Any())
 				{
 					//this copypasta has already been added
 					return;
 				}
 
-				var copypasta = new Copypasta()
-				{
-					Title = title,
-					Content = content,
-					DateAdded = DateTime.Now
-				};
 				db.Copypastas.Add(copypasta);
 				db.SaveChanges();
 			}

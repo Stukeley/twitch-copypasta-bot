@@ -26,7 +26,14 @@ namespace TwitchCopypastaBot.Windows
 		// _Block_Block_Block_
 		//
 		// _Block_Block_Block_
+		// between these two
 		private double VerticalMarginSize;
+
+		// _Block_Block_Block_
+		//
+		// _Block_Block_Block_
+		// total height of these
+		private double TotalHeight;
 
 		public BrowsePage()
 		{
@@ -37,11 +44,38 @@ namespace TwitchCopypastaBot.Windows
 			// Make necessary calculations
 			var tempBlock = new CopypastaBlock(null);
 
-			BlocksPerRow = (int)(this.Width / tempBlock.Width);
+			BlocksPerRow = (int)(CopypastaGrid.MaxWidth / tempBlock.MaxWidth);
 
-			HorizontalMarginSize = Math.Floor((this.Width - (3 * tempBlock.Width)) / 4);
+			// Create this many columns here
+
+			for (int i = 0; i < BlocksPerRow; i++)
+			{
+				var column = new ColumnDefinition();
+				column.Width = new GridLength(1, GridUnitType.Star);
+				CopypastaGrid.ColumnDefinitions.Add(column);
+			}
+
+			// 20 - let's assume it's the width of the VerticalScrollBar xD
+			HorizontalMarginSize = Math.Floor((CopypastaGrid.MaxWidth - 20 - (BlocksPerRow * tempBlock.MaxWidth)) / 4); ;
 
 			VerticalMarginSize = 30;
+
+			TotalHeight = (CopypastaSource.Count / BlocksPerRow + 1) * tempBlock.MaxHeight + (CopypastaSource.Count / BlocksPerRow + 1) * VerticalMarginSize;
+
+			this.CopypastaGrid.Height = TotalHeight;
+
+			// Create all rows
+			for (int i = 0; i < CopypastaSource.Count; i++)
+			{
+				if (i % BlocksPerRow == 0)
+				{
+					var row = new RowDefinition();
+					row.Height = new GridLength(VerticalMarginSize + tempBlock.MaxHeight);
+					CopypastaGrid.RowDefinitions.Add(row);
+				}
+			}
+
+			CreateCopypastaBlocks();
 		}
 
 		public void CreateCopypastaBlocks()
@@ -55,6 +89,9 @@ namespace TwitchCopypastaBot.Windows
 			// Column number
 			int i = 0;
 
+			// Row number
+			int j = 0;
+
 			// Vertical position - initially just the margin
 			double verticalPosition = VerticalMarginSize;
 
@@ -64,17 +101,23 @@ namespace TwitchCopypastaBot.Windows
 
 				block.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
 
-				var gridColumn = i % 3;
+				var gridColumn = i % BlocksPerRow;
 				i++;
 
-				if (i % 3 == 0)
+				CopypastaGrid.Children.Add(block);
+				Grid.SetRow(block, j);
+				Grid.SetColumn(block, gridColumn);
+
+				if (i % BlocksPerRow == 0)
 				{
 					// change vertical margin every 3 pastas added - fourth added copypasta will be lower than the previous three
-					verticalPosition = verticalPosition + block.Height + VerticalMarginSize;
-				}
+					verticalPosition = verticalPosition + block.MaxHeight + VerticalMarginSize;
 
-				Grid.SetColumn(block, gridColumn);
-				CopypastaGrid.Children.Add(block);
+					j++;
+					var row = new RowDefinition();
+					row.Height = new GridLength(VerticalMarginSize + block.MaxHeight);
+					CopypastaGrid.RowDefinitions.Add(row);
+				}
 			}
 
 			//save the current layout for future use (during searches)
@@ -99,14 +142,15 @@ namespace TwitchCopypastaBot.Windows
 				{
 					var temp = elem as CopypastaBlock;
 
-					Grid.SetColumn(temp, i % 3);
+					CopypastaGrid.Children.Add(temp);
+
+					Grid.SetColumn(temp, i % BlocksPerRow);
 					i++;
 
 					temp.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
 
-					CopypastaGrid.Children.Add(temp);
 
-					if (i % 3 == 0)
+					if (i % BlocksPerRow == 0)
 					{
 						verticalPosition = verticalPosition + temp.Height + VerticalMarginSize;
 					}

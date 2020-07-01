@@ -177,6 +177,9 @@
     <Compile Include="Windows\CopypastaBlock.xaml.cs">
       <DependentUpon>CopypastaBlock.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\CreateCopypasta.xaml.cs">
+      <DependentUpon>CreateCopypasta.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\CreditsWindow.xaml.cs">
       <DependentUpon>CreditsWindow.xaml</DependentUpon>
     </Compile>
@@ -212,6 +215,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Windows\CopypastaBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\CreateCopypasta.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

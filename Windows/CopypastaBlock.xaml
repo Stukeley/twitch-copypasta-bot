@@ -7,7 +7,7 @@
 			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
 			 Background="White"
-             d:DesignHeight="160" d:DesignWidth="160">
+             d:DesignHeight="160" d:DesignWidth="160" MaxHeight="160" MaxWidth="160">
     <Grid>
 		<TextBlock x:Name="TitleBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="5,5" FontFamily="Roboto" FontWeight="Medium" FontSize="12"
 				   Text="TemporaryTitleThatIsTooLongToFit" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"

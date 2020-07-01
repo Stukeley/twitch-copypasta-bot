@@ -38,6 +38,9 @@ namespace TwitchCopypastaBot
 		private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
 			// Dodawanie nowej pasty bez bota
+			// Inconsistent naming
+			var window = new CreateCopypasta();
+			window.Show();
 		}
 
 		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)
