@@ -84,6 +84,8 @@ namespace TwitchCopypastaBot.Bot
 		//Once _allMessages reaches MaxCapacity messages, evaluate and clear it
 		private void EvaluateAllMessages()
 		{
+			_logger.Log(_logId++, $"Evaluating {_allMessages.Count} messages", DateTime.Now);
+
 			for (int i = 0; i < _allMessages.Count; i++)
 			{
 				int currentCount = 0;

@@ -20,15 +20,14 @@ namespace TwitchCopypastaBot.Windows
 
 		private void RefreshTextBlocks()
 		{
-			// TODO: maybe not hardcode this
 
 			if (!TwitchChatBot.Instance.IsActive)
 			{
-				StartButton.Content = "Uruchom bota";
+				StartButton.Content = Titles.StartBot;
 			}
 			else
 			{
-				StartButton.Content = "Zatrzymaj bota";
+				StartButton.Content = Titles.StopBot;
 			}
 
 			CurrentChannel.Text = CurrentChannel.Text.Replace("[0]", TwitchChatBot.ChannelName);
@@ -48,7 +47,7 @@ namespace TwitchCopypastaBot.Windows
 				if (TwitchChatBot.Instance.IsActive)
 				{
 					TwitchChatBot.Instance.Disconnect();
-					Thread.Sleep(1000);
+					Thread.Sleep(500);
 					TwitchChatBot.Instance.Connect();
 				}
 			}
@@ -76,7 +75,7 @@ namespace TwitchCopypastaBot.Windows
 
 		private void ClearButton_Click(object sender, RoutedEventArgs e)
 		{
-			var result = MessageBox.Show("Na pewno chcesz usunąć całą bazę copypast?", "Potwierdź usunięcie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			var result = MessageBox.Show(Titles.ConfirmDatabaseDeletion, Titles.ConfirmDatabaseDeletionTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
 			if (result == MessageBoxResult.Yes)
 			{

@@ -1,34 +1,25 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using TwitchCopypastaBot.Database;
 using TwitchCopypastaBot.Models;
 
 namespace TwitchCopypastaBot.Windows
 {
-	//todo: add hints for the boxes
 	public partial class EditCopypasta : Window
 	{
-		public Copypasta Copypasta;
+		private Copypasta Copypasta;
 
 		public EditCopypasta(Copypasta copypasta)
 		{
 			InitializeComponent();
 
-			// debug only
-			if (copypasta == null)
-			{
-				TitleBox.Text = "Error!";
-				ContentBox.Text = "Something went wrong";
-			}
-			else
-			{
-				Copypasta = copypasta;
+			Copypasta = copypasta;
 
-				TitleBox.Text = Copypasta.Title;
-				ContentBox.Text = Copypasta.Content;
-				FavouriteCheckbox.IsChecked = Copypasta.IsFavourite;
-				DateAddedPicker.SelectedDate = Copypasta.DateAdded;
-				ChannelFromBox.Text = Copypasta.ChannelFrom;
-			}
+			TitleBox.Text = Copypasta.Title;
+			ContentBox.Text = Copypasta.Content;
+			FavouriteCheckbox.IsChecked = Copypasta.IsFavourite;
+			DateAddedPicker.SelectedDate = Copypasta.DateAdded;
+			ChannelFromBox.Text = Copypasta.ChannelFrom;
 		}
 
 		private void EditWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -52,7 +43,14 @@ namespace TwitchCopypastaBot.Windows
 
 			if (DateAddedPicker.SelectedDate.HasValue)
 			{
-				Copypasta.DateAdded = DateAddedPicker.SelectedDate.Value;
+				//! Important - DatePicker only picks date, not time
+				//! Time has to be set separately
+				var now = DateTime.Now;
+
+				var dateTime = new DateTime(DateAddedPicker.SelectedDate.Value.Year, DateAddedPicker.SelectedDate.Value.Month, DateAddedPicker.SelectedDate.Value.Day,
+					now.Hour, now.Minute, now.Second);
+
+				Copypasta.DateAdded = dateTime;
 			}
 
 			DatabaseOperations.UpdateCopypasta(Copypasta);
@@ -60,7 +58,7 @@ namespace TwitchCopypastaBot.Windows
 
 		private void DeleteCopypasta_Click(object sender, RoutedEventArgs e)
 		{
-			var result = MessageBox.Show("Na pewno chcesz usunąć tą pastę z bazy?", "Potwierdź usunięcie", MessageBoxButton.YesNo, MessageBoxImage.Question);
+			var result = MessageBox.Show(Titles.ConfirmDeletion, Titles.ConfirmDeletionTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
 			if (result == MessageBoxResult.Yes)
 			{
 				DatabaseOperations.DeleteCopypasta(Copypasta);

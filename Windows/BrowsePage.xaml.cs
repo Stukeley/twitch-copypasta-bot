@@ -11,8 +11,8 @@ namespace TwitchCopypastaBot.Windows
 	{
 		private List<Copypasta> CopypastaSource;
 
-		// grid without any filters
-		private UIElementCollection UnfilteredUiCollection;
+		// Already clreated blocks, so that they don't have to be created ever again (just once)
+		private List<CopypastaBlock> UnfilteredBlocks;
 
 		//! Calculations
 
@@ -20,7 +20,7 @@ namespace TwitchCopypastaBot.Windows
 		private int BlocksPerRow;
 
 		// _Block_Block_Block_
-		// always 4 spaces
+		// always BlocksPerRow + 1 spaces
 		private double HorizontalMarginSize;
 
 		// _Block_Block_Block_
@@ -41,6 +41,8 @@ namespace TwitchCopypastaBot.Windows
 
 			CopypastaSource = DatabaseOperations.WritePastasToList();
 
+			UnfilteredBlocks = new List<CopypastaBlock>();
+
 			// Make necessary calculations
 			var tempBlock = new CopypastaBlock(null);
 
@@ -60,6 +62,8 @@ namespace TwitchCopypastaBot.Windows
 
 			VerticalMarginSize = 30;
 
+			//! TotalHeight should be changed every time the grid is updated!
+
 			TotalHeight = (CopypastaSource.Count / BlocksPerRow + 1) * tempBlock.MaxHeight + (CopypastaSource.Count / BlocksPerRow + 1) * VerticalMarginSize;
 
 			this.CopypastaGrid.Height = TotalHeight;
@@ -76,11 +80,16 @@ namespace TwitchCopypastaBot.Windows
 			}
 
 			CreateCopypastaBlocks();
+
+			SearchTitleBox.TextChanged += SearchBox_TextChanged;
+			SearchContentBox.TextChanged += SearchBox_TextChanged;
+			SearchFavouritesBox.Checked += SearchFavouritesBox_Checked;
+			SearchFavouritesBox.Unchecked += SearchFavouritesBox_Checked;
 		}
 
 		public void CreateCopypastaBlocks()
 		{
-			if (CopypastaSource == null)
+			if (UnfilteredBlocks == null)
 			{
 				// display some error
 				return;
@@ -92,7 +101,7 @@ namespace TwitchCopypastaBot.Windows
 			// Row number
 			int j = 0;
 
-			// Vertical position - initially just the margin
+			// Vertical position is ALWAYS just the margin size - it was initially modified so now I'll just keep this useless line of code
 			double verticalPosition = VerticalMarginSize;
 
 			foreach (var item in CopypastaSource)
@@ -111,10 +120,12 @@ namespace TwitchCopypastaBot.Windows
 				Grid.SetRow(block, j);
 				Grid.SetColumn(block, gridColumn);
 
+				// Save the current layout for future use (during searches)
+				UnfilteredBlocks.Add(block);
+
 				if (i % BlocksPerRow == 0)
 				{
 					// change vertical margin every 3 pastas added - fourth added copypasta will be lower than the previous three
-					verticalPosition = verticalPosition + block.MaxHeight + VerticalMarginSize;
 
 					j++;
 					var row = new RowDefinition();
@@ -122,107 +133,109 @@ namespace TwitchCopypastaBot.Windows
 					CopypastaGrid.RowDefinitions.Add(row);
 				}
 			}
-
-			//save the current layout for future use (during searches)
-			UnfilteredUiCollection = CopypastaGrid.Children;
 		}
 
 		// without creating blocks all over again - take the ones that match the search criteria, reorganize them and that's it
-		private void UpdateCopypastaBlocks()
+		private void UpdateCopypastaBlocks(string title = null, string content = null, bool? isChecked = null)
 		{
-			if (UnfilteredUiCollection == null)
+			if (UnfilteredBlocks == null)
 			{
 				//?
 				return;
 			}
 
-			int i = 0;
+			CopypastaGrid.Children.Clear();
+
+			int i = 0;  //column
+			int j = 0;  //row
+
 			double verticalPosition = VerticalMarginSize;
 
-			foreach (var elem in UnfilteredUiCollection)
+			foreach (var elem in UnfilteredBlocks)
 			{
-				if (elem is CopypastaBlock)
+				// null or empty means that it's not specified and shouldn't matter
+				// Everything is transformed to lowercase for better searching
+
+				if (!string.IsNullOrEmpty(title))
 				{
-					var temp = elem as CopypastaBlock;
-
-					CopypastaGrid.Children.Add(temp);
-
-					Grid.SetColumn(temp, i % BlocksPerRow);
-					i++;
-
-					temp.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
-
-
-					if (i % BlocksPerRow == 0)
+					// Copypasta's Title can be null - if we search for non-null and it's null, do not display it
+					if (elem.Copypasta.Title == null)
 					{
-						verticalPosition = verticalPosition + temp.Height + VerticalMarginSize;
+						continue;
 					}
 
+					if (!elem.Copypasta.Title.ToLower().Contains(title.ToLower()))
+					{
+						// doesn't match
+						continue;
+					}
+				}
+
+				if (!string.IsNullOrEmpty(content))
+				{
+					if (!elem.Copypasta.Content.ToLower().Contains(content.ToLower()))
+					{
+						// doesn't match
+						continue;
+					}
+				}
+
+				if (isChecked != null)
+				{
+					if (!elem.Copypasta.IsFavourite == isChecked)
+					{
+						// doesn't match
+						continue;
+					}
+				}
+
+				CopypastaGrid.Children.Add(elem);
+
+				Grid.SetColumn(elem, i % BlocksPerRow);
+				Grid.SetRow(elem, j);
+				i++;
+
+				elem.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
+
+				if (i % BlocksPerRow == 0)
+				{
+					j++;
 				}
 			}
+
+			// temporary block to make calculations on
+			var tempBlock = UnfilteredBlocks[0];
+
+			TotalHeight = (CopypastaGrid.Children.Count / BlocksPerRow + 1) * tempBlock.MaxHeight + (CopypastaGrid.Children.Count / BlocksPerRow + 1) * VerticalMarginSize;
+
+			// If it's less than the minimum height (one page), make it equal
+
+			this.CopypastaGrid.Height = TotalHeight < CopypastaGrid.MinHeight ? CopypastaGrid.MinHeight : TotalHeight;
+			this.CopypastaViewer.ScrollToVerticalOffset(0);
+		}
+
+		// Resets Title, Content and Favourite boxes to their initial state
+		private void ResetBoxes()
+		{
+			SearchTitleBox.Text = "";
+			SearchContentBox.Text = "";
+			SearchFavouritesBox.IsChecked = false;
 		}
 
 		private void SearchFavouritesBox_Checked(object sender, RoutedEventArgs e)
 		{
-			if (UnfilteredUiCollection == null)
-			{
-				//?
-				return;
-			}
-
-			int i = 0;
-			double verticalPosition = VerticalMarginSize;
-
-			foreach (var elem in UnfilteredUiCollection)
-			{
-				if (elem is CopypastaBlock)
-				{
-					var temp = elem as CopypastaBlock;
-
-					if (temp.Copypasta.IsFavourite == SearchFavouritesBox.IsChecked)
-					{
-						Grid.SetColumn(temp, i % 3);
-						i++;
-
-						temp.Margin = new Thickness(HorizontalMarginSize, verticalPosition, 0, 0);
-
-						CopypastaGrid.Children.Add(temp);
-
-						if (i % 3 == 0)
-						{
-							verticalPosition = verticalPosition + temp.Height + VerticalMarginSize;
-						}
-					}
-				}
-			}
+			UpdateCopypastaBlocks(SearchTitleBox.Text, SearchContentBox.Text, SearchFavouritesBox.IsChecked);
 		}
 
-		private void SearchTitleBox_TextChanged(object sender, TextChangedEventArgs e)
+		private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
-
-		}
-
-		private void SearchContentBox_TextChanged(object sender, TextChangedEventArgs e)
-		{
-
+			UpdateCopypastaBlocks(SearchTitleBox.Text, SearchContentBox.Text, SearchFavouritesBox.IsChecked);
 		}
 
 		private void ResetSearch_Click(object sender, RoutedEventArgs e)
 		{
-			if (UnfilteredUiCollection != null)
-			{
-				foreach (var elem in UnfilteredUiCollection)
-				{
-					if (elem is CopypastaBlock)
-					{
-						CopypastaGrid.Children.Add(elem as CopypastaBlock);
-					}
-				}
-
-				SearchTitleBox.Text = "";
-				SearchContentBox.Text = "";
-				SearchFavouritesBox.IsChecked = false;
-			}
+			UpdateCopypastaBlocks(null, null, null);
+			ResetBoxes();
 		}
 	}
 }

@@ -15,7 +15,7 @@
 				Margin="0,50" Click="StartButton_Click" Background="#15C246"/>
 
 		<TextBlock x:Name="CurrentChannel" Text="Obecny kanał: [0]"  FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top"
-				Margin="50,150,100,0"/>
+				Margin="50,133,100,0"/>
 
 		<TextBlock Text="Zmień kanał (uruchomi ponownie bota)" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top"
 				HorizontalAlignment="Right" Margin="0,133,20,0"/>
@@ -25,7 +25,7 @@
 				Margin="657,161,55,0" Click="ChangeChannelButton_Click" Background="#15C246"/>
 
 		<TextBlock x:Name="TimeConnected" Text="Bot działa od: [1]"  FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" 
-				Margin="50,250,100,0"/>
+				Margin="50,200,100,0"/>
 
 		<Button x:Name="DebugButton" Content="Zapisz do pliku txt" Width="200" Margin="572,277,22,62" Click="DebugButton_Click"
 				Background="#15C246"/>

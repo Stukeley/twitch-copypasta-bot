@@ -14,26 +14,18 @@ namespace TwitchCopypastaBot.Windows
 
 		private void SaveButton_Click(object sender, RoutedEventArgs e)
 		{
-			string title = TitleBox.Text;
-
 			if (ContentBox.Text == "")
 			{
-				ContentBox.Text = "Treść nie może być pusta!";
+				MessageBox.Show(Titles.ContentEmptyError, Titles.ErrorTitle, MessageBoxButton.OK, MessageBoxImage.Error);
 				return;
 			}
 
-			string content = ContentBox.Text;
-
-			DateTime dateAdded = DateTime.Now;
-
-			bool isFavourite = FavouriteCheckbox.IsChecked.Value;
-
 			var pasta = new Copypasta
 			{
-				Title = title,
-				Content = content,
-				DateAdded = dateAdded,
-				IsFavourite = isFavourite,
+				Title = TitleBox.Text,
+				Content = ContentBox.Text,
+				DateAdded = DateTime.Now,
+				IsFavourite = FavouriteCheckbox.IsChecked.Value,
 				ChannelFrom = ""
 			};
 

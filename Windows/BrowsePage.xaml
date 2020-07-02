@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="371" d:DesignWidth="794" MaxWidth="794"
 			 Background="LightGray">
     <Grid>
-		<ScrollViewer x:Name="CopypastaViewer" Width="594" Margin="0,10,0,0"
-					  HorizontalAlignment="Left" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible">
-			<Grid x:Name="CopypastaGrid" MaxWidth="594">
+		<ScrollViewer x:Name="CopypastaViewer" Width="594" Margin="0,10,0,10"
+					  HorizontalAlignment="Left" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+			<Grid x:Name="CopypastaGrid" MaxWidth="594" MinHeight="351">
 			</Grid>
 		</ScrollViewer>
 
@@ -19,14 +20,14 @@
 		</StackPanel>
 
 		<Grid Width="200" HorizontalAlignment="Right">
-			<TextBox x:Name="SearchTitleBox" Text="Tytuł" FontFamily="Roboto" FontWeight="Regular" FontSize="14" Margin="5,20" TextWrapping="NoWrap"
-					 Height="30" Width="180" VerticalAlignment="Top" HorizontalAlignment="Left" TextChanged="SearchTitleBox_TextChanged"/>
+			<TextBox x:Name="SearchTitleBox" materialDesign:HintAssist.Hint="Tytuł" FontFamily="Roboto" FontWeight="Regular" FontSize="14" Margin="5,20" TextWrapping="NoWrap"
+					 Height="30" Width="180" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 			
-			<TextBox x:Name="SearchContentBox" Text="Zawartość" FontFamily="Roboto" FontWeight="Regular" FontSize="14" Margin="5,70" TextWrapping="Wrap"
-					 Height="30" Width="180" VerticalAlignment="Top" HorizontalAlignment="Left" MaxLines="1" TextChanged="SearchContentBox_TextChanged"/>
+			<TextBox x:Name="SearchContentBox" materialDesign:HintAssist.Hint="Zawartość" FontFamily="Roboto" FontWeight="Regular" FontSize="14" Margin="5,70" TextWrapping="Wrap"
+					 Height="30" Width="180" VerticalAlignment="Top" HorizontalAlignment="Left" MaxLines="1"/>
 			
 			<CheckBox x:Name="SearchFavouritesBox" Content="Tylko ulubione" FontFamily="Roboto" FontWeight="Regular" FontSize="14" Margin="5,120"
-					  Height="30" Checked="SearchFavouritesBox_Checked" Unchecked="SearchFavouritesBox_Checked"
+					  Height="30"
 					  VerticalAlignment="Top" HorizontalAlignment="Left"/>
 
 			<Button x:Name="ResetSearch" Width="160" Content="Resetuj filtry" FontFamily="Roboto" FontSize="16" FontWeight="Medium"

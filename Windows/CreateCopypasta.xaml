@@ -9,14 +9,14 @@
         Title="Stwórz copypastę" Height="450" Width="600">
 	<Grid>
 		<TextBox x:Name="TitleBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="564" Margin="5,15" FontFamily="Roboto" FontWeight="Medium" FontSize="16"
-				 Text="TemporaryTitleThatIsTooLongToFit" materialDesign:HintAssist.Hint="TYTUŁ"/>
+				 materialDesign:HintAssist.Hint="TYTUŁ"/>
 
 		<CheckBox x:Name="FavouriteCheckbox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Margin="15,60,0,0" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
 				  Content="Ulubiona"/>
 
 		<TextBox x:Name="ContentBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="574" Height="220" Margin="5,110" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
 				 TextWrapping="Wrap" materialDesign:HintAssist.Hint="TREŚĆ" BorderThickness="1" Padding="1"
-				 Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur luctus, tortor viverra dictum ultricies, velit erat viverra eros, viverra tempor massa neque ac arcu. Pellentesque non sapien sem."/>
+				 />
 		<Button x:Name="SaveButton" Content="Zapisz" FontFamily="Roboto" FontSize="16" FontWeight="Medium" Width="120" VerticalAlignment="Top"
 				HorizontalAlignment="Center" Margin="0,360,0,0" Background="#15C246" Click="SaveButton_Click"/>
 	</Grid>

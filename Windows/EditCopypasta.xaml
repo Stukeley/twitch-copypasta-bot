@@ -6,14 +6,14 @@
         xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Background="Snow" Title="Edycja" x:Name="EditWindow"
-        d:DesignHeight="371" d:DesignWidth="594"
+        d:DesignHeight="371" d:DesignWidth="594" MaxWidth="594" MaxHeight="371"
 		Closing="EditWindow_Closing" ResizeMode="NoResize">
     <Grid>
 		<TextBox x:Name="TitleBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="564" Margin="5" FontFamily="Roboto" FontWeight="Medium" FontSize="16"
-				 Text="TemporaryTitleThatIsTooLongToFit" materialDesign:HintAssist.Hint="TYTUŁ"/>
+				 materialDesign:HintAssist.Hint="TYTUŁ"/>
 
 		<TextBox x:Name="ChannelFromBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Margin="5,50" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
-				 Text="Stukeleyak" materialDesign:HintAssist.Hint="KANAŁ"/>
+				 materialDesign:HintAssist.Hint="KANAŁ"/>
 
 		<DatePicker x:Name="DateAddedPicker" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160" Margin="200,50" FontFamily="Roboto" FontWeight="Regular"
 					FontSize="14" materialDesign:HintAssist.Hint="DATA"/>
@@ -26,6 +26,6 @@
 
 		<TextBox x:Name="ContentBox" HorizontalAlignment="Center" VerticalAlignment="Top" Width="574" Height="220" Margin="5,110" FontFamily="Roboto" FontWeight="Regular" FontSize="14"
 				 TextWrapping="Wrap" materialDesign:HintAssist.Hint="TREŚĆ" BorderThickness="1" Padding="1"
-				 Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur luctus, tortor viverra dictum ultricies, velit erat viverra eros, viverra tempor massa neque ac arcu. Pellentesque non sapien sem."/>
+				 />
 	</Grid>
 </Window>

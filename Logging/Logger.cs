@@ -23,7 +23,7 @@ namespace TwitchCopypastaBot.Logging
 
 			try
 			{
-				File.AppendAllText(filePath, $"{log.CreatedTime} {log.Id} {log.Message}" + Environment.NewLine);
+				File.AppendAllText(filePath, $"{log.Id} {log.CreatedTime} {log.Message}" + Environment.NewLine);
 			}
 			catch (Exception)
 			{
