@@ -13,6 +13,30 @@ namespace TwitchCopypastaBot.Windows
 		{
 			InitializeComponent();
 
+			//? Translation
+
+			if (Titles.Language == "EN")
+			{
+				FavouriteCheckbox.Content = Titles.Favourite_EN;
+				DeleteCopypasta.Content = Titles.Delete_EN;
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(TitleBox, Titles.Title_EN);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(ContentBox, Titles.Content_EN);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(DateAddedPicker, Titles.DateAdded_EN);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(ChannelFromBox, Titles.ChannelFrom_EN);
+
+			}
+			else
+			{
+				FavouriteCheckbox.Content = Titles.Favourite;
+				DeleteCopypasta.Content = Titles.Delete;
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(TitleBox, Titles.Title);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(ContentBox, Titles.Content);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(DateAddedPicker, Titles.DateAdded);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(ChannelFromBox, Titles.ChannelFrom);
+			}
+
+			//? End translation
+
 			Copypasta = copypasta;
 
 			TitleBox.Text = Copypasta.Title;
@@ -58,7 +82,17 @@ namespace TwitchCopypastaBot.Windows
 
 		private void DeleteCopypasta_Click(object sender, RoutedEventArgs e)
 		{
-			var result = MessageBox.Show(Titles.ConfirmDeletion, Titles.ConfirmDeletionTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
+			MessageBoxResult result;
+
+			if (Titles.Language == "EN")
+			{
+				result = MessageBox.Show(Titles.ConfirmDeletion_EN, Titles.ConfirmDeletionTitle_EN, MessageBoxButton.YesNo, MessageBoxImage.Question);
+			}
+			else
+			{
+				result = MessageBox.Show(Titles.ConfirmDeletion, Titles.ConfirmDeletionTitle, MessageBoxButton.YesNo, MessageBoxImage.Question);
+			}
+
 			if (result == MessageBoxResult.Yes)
 			{
 				DatabaseOperations.DeleteCopypasta(Copypasta);

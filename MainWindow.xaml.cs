@@ -14,6 +14,37 @@ namespace TwitchCopypastaBot
 			InitializeComponent();
 
 			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
+
+			Titles.Language = Properties.Settings.Default["Language"].ToString();
+
+			//? Translation
+
+			if (Titles.Language == "EN")
+			{
+				MainPageText.Text = Titles.MainPageTitle_EN;
+				BrowsePageText.Text = Titles.BrowsePageTitle_EN;
+				AddPageText.Text = Titles.AddPageTitle_EN;
+				ActionsPageText.Text = Titles.ActionsPageTitle_EN;
+			}
+			else
+			{
+				MainPageText.Text = Titles.MainPageTitle;
+				BrowsePageText.Text = Titles.BrowsePageTitle;
+				AddPageText.Text = Titles.AddPageTitle;
+				ActionsPageText.Text = Titles.ActionsPageTitle;
+			}
+
+			//? End translation
+
+			if (!string.IsNullOrEmpty(Properties.Settings.Default["LogsFolderPath"].ToString()))
+			{
+				Titles.LogsDirectoryName = Properties.Settings.Default["LogsFolderPath"].ToString();
+			}
+
+			if (!string.IsNullOrEmpty(Properties.Settings.Default["BotInfoPath"].ToString()))
+			{
+				TwitchChatBot.BotInfoPath = Properties.Settings.Default["BotInfoPath"].ToString();
+			}
 		}
 
 		private void ChangeContent(UserControl newPage, string title)
@@ -25,13 +56,15 @@ namespace TwitchCopypastaBot
 
 		private void Homepage_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			ChangeContent(new MainPage(), Models.Titles.MainPageTitle);
+			var title = Titles.Language == "EN" ? Titles.MainPageTitle_EN : Titles.MainPageTitle;
+			ChangeContent(new MainPage(), title);
 		}
 
 		private void Browse_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
 			// Wszystkie w jednym miejscu jakoś
-			ChangeContent(new BrowsePage(), Models.Titles.BrowsePageTitle);
+			var title = Titles.Language == "EN" ? Titles.BrowsePageTitle_EN : Titles.BrowsePageTitle;
+			ChangeContent(new BrowsePage(), title);
 		}
 
 		private void Add_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -44,7 +77,8 @@ namespace TwitchCopypastaBot
 
 		private void Actions_PreviewMouseUp(object sender, MouseButtonEventArgs e)
 		{
-			ChangeContent(new ActionsPage(), Models.Titles.ActionsPageTitle);
+			var title = Titles.Language == "EN" ? Titles.ActionsPageTitle_EN : Titles.ActionsPageTitle;
+			ChangeContent(new ActionsPage(), title);
 		}
 
 		private void Emote_PreviewMouseUp(object sender, MouseButtonEventArgs e)

@@ -39,6 +39,25 @@ namespace TwitchCopypastaBot.Windows
 		{
 			InitializeComponent();
 
+			//? Translation
+
+			if (Titles.Language == "EN")
+			{
+				ResetSearch.Content = Titles.ResetFilters_EN;
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(SearchTitleBox, Titles.Title_EN);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(SearchContentBox, Titles.Content_EN);
+				SearchFavouritesBox.Content = Titles.Favourite_EN;
+			}
+			else
+			{
+				ResetSearch.Content = Titles.ResetFilters;
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(SearchTitleBox, Titles.Title);
+				MaterialDesignThemes.Wpf.HintAssist.SetHint(SearchContentBox, Titles.Content);
+				SearchFavouritesBox.Content = Titles.Favourite;
+			}
+
+			//? End translation
+
 			CopypastaSource = DatabaseOperations.WritePastasToList();
 
 			UnfilteredBlocks = new List<CopypastaBlock>();

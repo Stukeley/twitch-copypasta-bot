@@ -20,7 +20,26 @@ namespace TwitchCopypastaBot.Windows
 		// TODO: make this async
 		private void RefreshTextBlocks()
 		{
-			CopypastaBotActive.Text = (Bot.TwitchChatBot.Instance.IsActive ? "Witaj. Bot aktywny!" : "Witaj. Bot jest obecnie nieaktywny.");
+			//? Translation
+
+			if (Titles.Language == "EN")
+			{
+				CopypastaBotActive.Text = (Bot.TwitchChatBot.Instance.IsActive ? Titles.BotActive_EN : Titles.BotInactive_EN);
+				CopypastaCountText.Text = Titles.CurrentCopypastaCount_EN;
+				CopypastaDateText.Text = Titles.LastCopypastaDate_EN;
+				CopypastaUntitledCount.Text = Titles.UnnamedCopypastaCount_EN;
+				SeeLogsButton.Text = Titles.OpenLogs_EN;
+			}
+			else
+			{
+				CopypastaBotActive.Text = (Bot.TwitchChatBot.Instance.IsActive ? Titles.BotActive : Titles.BotInactive);
+				CopypastaCountText.Text = Titles.CurrentCopypastaCount;
+				CopypastaDateText.Text = Titles.LastCopypastaDate;
+				CopypastaUntitledCount.Text = Titles.UnnamedCopypastaCount;
+				SeeLogsButton.Text = Titles.OpenLogs;
+			}
+
+			//? End translation
 
 			int copypastasInDb, unnamedCopypatasInDb;
 			string lastCopypastaDateAdded;
@@ -48,7 +67,7 @@ namespace TwitchCopypastaBot.Windows
 			}
 			else
 			{
-				CopypastaUntitledCount.Text = "Wszystkie Copypasty w bazie danych mają tytuł. Hura!";
+				CopypastaUntitledCount.Text = Titles.Language == "EN" ? Titles.AllHaveTitles_EN : Titles.AllHaveTitles;
 			}
 		}
 

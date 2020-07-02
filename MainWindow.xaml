@@ -33,28 +33,28 @@
 				<ListViewItem x:Name="Homepage" Height="50" PreviewMouseUp="Homepage_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="HomeOutline" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-						<TextBlock Text="Strona Główna" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center" />
+						<TextBlock x:Name="MainPageText" Text="Strona Główna" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center" />
 					</StackPanel>
 				</ListViewItem>
 
 				<ListViewItem x:Name="Browse" Height="50" PreviewMouseUp="Browse_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="NoteOutline" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-						<TextBlock Text="Przeglądaj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
+						<TextBlock x:Name="BrowsePageText" Text="Przeglądaj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
 					</StackPanel>
 				</ListViewItem>
 
 				<ListViewItem x:Name="Add" Height="50" PreviewMouseUp="Add_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="Pen" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-						<TextBlock Text="Dodaj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
+						<TextBlock x:Name="AddPageText" Text="Dodaj" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
 					</StackPanel>
 				</ListViewItem>
 
 				<ListViewItem x:Name="Actions" Height="50" PreviewMouseUp="Actions_PreviewMouseUp" Width="120">
 					<StackPanel Orientation="Vertical" VerticalAlignment="Top" Width="120" Margin="-7,-5,0,0">
 						<materialDesign:PackIcon Kind="CogOutline" Width="20" Height="20" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-						<TextBlock Text="Akcje" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
+						<TextBlock x:Name="ActionsPageText" Text="Akcje" VerticalAlignment="Bottom" FontFamily="Roboto" FontSize="14" TextAlignment="Center"/>
 					</StackPanel>
 				</ListViewItem>
 			</ListView>

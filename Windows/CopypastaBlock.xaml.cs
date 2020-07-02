@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using TwitchCopypastaBot.Database;
@@ -15,15 +14,9 @@ namespace TwitchCopypastaBot.Windows
 		{
 			InitializeComponent();
 
-			// debug purposes only
-			if (copypasta == null)
-			{
-				TitleBlock.Text = "Error";
-				ContentBlock.Text = "Something went wrong";
-				DateBlock.Text = DateTime.Now.ToString("dd.MM.y H:mm");
-				FavouriteIcon.IsEnabled = false;
-			}
-			else
+			//? How is this ever null?
+
+			if (copypasta != null)
 			{
 				Copypasta = copypasta;
 				ContentBlock.Text = Copypasta.Content;
@@ -31,7 +24,7 @@ namespace TwitchCopypastaBot.Windows
 
 				if (string.IsNullOrEmpty(Copypasta.Title))
 				{
-					TitleBlock.Text = Titles.Pasta_NoTitle;
+					TitleBlock.Text = Titles.Language == "EN" ? Titles.Pasta_NoTitle_EN : Titles.Pasta_NoTitle;
 				}
 				else
 				{

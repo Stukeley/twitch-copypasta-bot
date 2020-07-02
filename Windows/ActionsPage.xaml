@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TwitchCopypastaBot.Windows"
+			 xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="371" d:DesignWidth="794"
 			 Background="LightGray"
@@ -17,17 +18,17 @@
 		<TextBlock x:Name="CurrentChannel" Text="Obecny kanał: [0]"  FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top"
 				Margin="50,133,100,0"/>
 
-		<TextBlock Text="Zmień kanał (uruchomi ponownie bota)" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top"
+		<TextBlock x:Name="ChangeChannelBlock" Text="Zmień kanał (uruchomi ponownie bota)" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top"
 				HorizontalAlignment="Right" Margin="0,133,20,0"/>
 		<TextBox x:Name="ChangeChannel" Text="[0]" FontFamily="Roboto" FontSize="16" FontWeight="Medium" VerticalAlignment="Top" HorizontalAlignment="Right"
-				Margin="0,155,168,0" Width="120"/>
-		<Button x:Name="ChangeChannelButton" Content="Zmień" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" HorizontalAlignment="Center"
-				Margin="657,161,55,0" Click="ChangeChannelButton_Click" Background="#15C246"/>
+				Margin="0,155,168,0" Width="120" materialDesign:HintAssist.Hint="Kanał"/>
+		<Button x:Name="ChangeChannelButton" Content="Zmień" FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" HorizontalAlignment="Left"
+				Margin="654,161,0,0" Click="ChangeChannelButton_Click" Background="#15C246" Width="120"/>
 
 		<TextBlock x:Name="TimeConnected" Text="Bot działa od: [1]"  FontFamily="Roboto" FontSize="18" FontWeight="Medium" VerticalAlignment="Top" 
 				Margin="50,200,100,0"/>
 
-		<Button x:Name="DebugButton" Content="Zapisz do pliku txt" Width="200" Margin="572,277,22,62" Click="DebugButton_Click"
+		<Button x:Name="SaveToTxtButton" Content="Zapisz do pliku txt" Width="200" Margin="572,277,22,62" Click="SaveToTxtButton_Click"
 				Background="#15C246"/>
 
 		<Button x:Name="ClearButton" Content="Wyczyść bazę danych" Width="200" Click="ClearButton_Click" Margin="572,322,22,17"
@@ -38,5 +39,8 @@
 
 		<Button x:Name="ChooseBotInfoDirectoryButton" Content="Wybierz ścieżkę do danych bota" Width="300" Margin="243,322,251,17" Click="ChooseBotInfoDirectoryButton_Click"
 				Background="#15C246"/>
+
+		<Button x:Name="ChangeLanguageButton" Content="Change language" Width="200" Margin="22,294,572,45" FontFamily="Roboto" FontSize="14"
+				Background="#15C246" Click="ChangeLanguageButton_Click"/>
 	</Grid>
 </UserControl>
